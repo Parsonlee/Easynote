@@ -1,6 +1,4 @@
 import React from 'react';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import styled from '@emotion/styled';

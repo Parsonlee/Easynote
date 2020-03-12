@@ -34,9 +34,10 @@ const SideList = ({ sideListOn }) => {
 	const { theme } = useThemeModel();
 	const [list, setList] = useState(initData);
 
-	const handleDeleteItem = id => {
+	const deleteItem = id => {
 		setList(state => state.filter(item => (item.id === id ? false : true)));
 	};
+	
 	return (
 		<motion.div
 			css={css`
@@ -73,7 +74,7 @@ const SideList = ({ sideListOn }) => {
 						initial={{ x: '-100%', opacity: 0 }}
 						transition={{ duration: 0.2, delay: 0.06 * i }}
 						id={data.id}
-						deleteItem={handleDeleteItem}
+						deleteItem={deleteItem}
 						positionTransition
 					/>
 				))}

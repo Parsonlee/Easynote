@@ -1,11 +1,15 @@
-import React from 'react'
+import { useState } from 'react';
+import { createModel } from 'hox';
+import { themeConfig } from '../constants/config';
 
-const useThemeModel = () => {
-  return (
-    <div>
-      
-    </div>
-  )
+function useTheme() {
+	const [theme, setTheme] = useState(themeConfig.default);
+
+	const setThemeMode = themeKey => {
+		setTheme(themeConfig[themeKey]);
+	};
+
+	return { theme, setThemeMode };
 }
 
-export default useThemeModel
+export default createModel(useTheme);

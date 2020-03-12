@@ -7,11 +7,9 @@ import { motion } from 'framer-motion';
 import SideListItemDel from './SideListItemDel';
 
 import useThemeModel from '../../../models/useThemeModel';
-import useModalModel from '../../../models/useModalModel';
 
 const SideListItem = ({ sideListOn, deleteItem, id, ...props }) => {
 	const { theme } = useThemeModel();
-	const { openModal } = useModalModel();
 	const [showDel, setShowDel] = useState(false);
 
 	const handleMouseOver = () => {
@@ -24,7 +22,6 @@ const SideListItem = ({ sideListOn, deleteItem, id, ...props }) => {
 
 	return (
 		<motion.div
-			onTap={() => openModal({ title: '删除', description: '删除不可恢复' })}
 			onHoverStart={handleMouseOver}
 			onHoverEnd={handleMouseOut}
 			css={css`

@@ -16,7 +16,7 @@ const Container = () => {
 	}, [sideListOn]);
 
 	const { theme } = useThemeModel();
-	const { zoom, toggleZoom } = useZoomModel();
+	const { zoom } = useZoomModel();
 
 	return (
 		<div

@@ -47,6 +47,7 @@ export const themeConfig = {
     background: {
       base: '#FFFFFF',
       backdrop: '#FBFBFB',
+      backface: palette.black[8],
     },
     button: {
       background: palette.primary,
@@ -72,6 +73,7 @@ export const themeConfig = {
     background: {
       base: palette.black[100],
       backdrop: palette.white[4],
+      backface: palette.white[8]
     },
     button: {
       background: palette.primary,

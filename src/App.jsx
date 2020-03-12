@@ -1,13 +1,10 @@
 import React from 'react';
 /** @jsx jsx */
 import { css, jsx, Global } from '@emotion/core';
-import { between } from 'polished';
 import { AnimatePresence } from 'framer-motion';
 
 // 组件
 import Container from './components/Container';
-import Header from './components/header/Header';
-import Toolbar from './components/Toolbar';
 import Modal from './components/Modal';
 
 // 控制模型

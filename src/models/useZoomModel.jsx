@@ -1,11 +1,11 @@
-import React from 'react'
+import { useState } from 'react';
+import { createModel } from 'hox';
 
-const useZoomModel = () => {
-  return (
-    <div>
-      
-    </div>
-  )
+function useZoom() {
+	const [zoom, setZoom] = useState(false);
+
+	const toggleZoom = () => setZoom(!zoom);
+	return { zoom, toggleZoom };
 }
 
-export default useZoomModel
+export default createModel(useZoom);

@@ -1,20 +1,16 @@
-import React from 'react';
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-import useThemeModel from '../../../models/useThemeModel';
-import useModalModel from '../../../models/useModalModel';
+import useThemeModel from '../../models/useThemeModel';
 
-const SideListItemDel = ({ deleteItem, id, ...props }) => {
+const SidebarDelBtn = ({ onClickDelBtn, ...props }) => {
 	const { theme } = useThemeModel();
-	const { openModal } = useModalModel();
 
 	const handleClick = e => {
 		e.stopPropagation();
-		// openModal({ title: '删除', description: '删除不可恢复' });
-		deleteItem(id);
+		onClickDelBtn && onClickDelBtn(e);
 	};
 
 	return (
@@ -34,4 +30,4 @@ const SideListItemDel = ({ deleteItem, id, ...props }) => {
 	);
 };
 
-export default SideListItemDel;
+export default SidebarDelBtn;

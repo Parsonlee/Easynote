@@ -23,10 +23,11 @@ const App = props => {
 	const history = useHistory();
 
 	// 文章data
-	const { data } = useDataModel();
+	const { data, deleteByIndex } = useDataModel();
 
 	// 侧栏
 	const [showSidebar, setShowSidebar] = useState(true);
+	const [activeIndex, setActiveIndex] = useState(0);
 	const handleMenuBtnSwitch = useCallback(onOff => {
 		setShowSidebar(onOff);
 	}, []);
@@ -44,25 +45,30 @@ const App = props => {
 	]);
 
 	// 侧栏导航
-	const handleClickItem = contentId => {
-		history.push(`/${categoryParam}/${contentId}`);
+	const handleClickItem = (contentId, index) => {
+		// history.push(`/${categoryParam}/${contentId}`); // 切换导航
+		setActiveIndex(index); // 激活index对应侧栏item
 	};
 
 	// 创建文章
+	const handleTapCreate = () => {
+		// do something to create a note
+	};
+
 	return (
 		<StyledApp theme={theme}>
 			<Container>
 				<Header>
 					<MenuBtn initial={true} onSwitch={handleMenuBtnSwitch} />
 					<AppSwitch initial={0} onSwitch={handleCategorySwitch} />
-					<CreateBtn>+ 写文章</CreateBtn>
+					<CreateBtn onTap={handleTapCreate}>+ 写文章</CreateBtn>
 				</Header>
 
 				<Switch>
 					<Route exact path='/'>
 						<MainBody>
 							<Sidebar show={showSidebar}>
-								{data.map(item => {
+								{data.map((item, i) => {
 									return (
 										item.category === 'note' && (
 											<SidebarItem
@@ -71,8 +77,10 @@ const App = props => {
 												desription={item.content.body[0]['content']}
 												date={item.createdTime}
 												timeBefore='3小时前'
-												active={item.id === '1'}
-												onTap={() => handleClickItem(item.contentId)}
+												active={i === activeIndex}
+												index={i}
+												onTap={index => handleClickItem(item.contentId, index)}
+												onClickDelBtn={() => deleteByIndex(i)}
 											/>
 										)
 									);

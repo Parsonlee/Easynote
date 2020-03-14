@@ -64,7 +64,7 @@ const StyledAppSwitch = styled.div`
 	color: ${({ theme }) => theme.color.caption};
 	user-select: none;
 	.item {
-		padding: 10px;
+		padding: 15px;
 		cursor: pointer;
 		z-index: 2;
 		transition: 0.2s;

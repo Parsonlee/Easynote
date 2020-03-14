@@ -8,17 +8,9 @@ import SidebarDelBtn from './SidebarDelBtn';
 
 import useThemeModel from '../../models/useThemeModel';
 
-const SideListItem = ({ title, desription, date, timeBefore, active, onTap }) => {
+const SideListItem = ({ title, desription, date, timeBefore, active, onTap, index, onClickDelBtn }) => {
 	const { theme } = useThemeModel();
 	const [showDel, setShowDel] = useState(false);
-
-	const handleHoverStart = () => {
-		setShowDel(true);
-	};
-	const handleHoverEnd = () => {
-		setShowDel(false);
-	};
-
 	// 挂载动画
 	const variants = {
 		initial: {
@@ -38,13 +30,24 @@ const SideListItem = ({ title, desription, date, timeBefore, active, onTap }) =>
 		}
 	};
 
+	const handleHoverStart = () => {
+		setShowDel(true);
+	};
+	const handleHoverEnd = () => {
+		setShowDel(false);
+	};
+	const handleTap = ()=>{
+    if(index===0) onTap(0)
+    if(index) onTap(index)
+  }
+
 	return (
 		<motion.div
 			variants={variants}
 			initial='initial'
 			animate='animate'
 			exit='exit'
-			onTap={onTap}
+			onTap={handleTap}
 			onHoverStart={handleHoverStart}
 			onHoverEnd={handleHoverEnd}
 			css={css`
@@ -111,6 +114,7 @@ const SideListItem = ({ title, desription, date, timeBefore, active, onTap }) =>
 					top: 6px;
 					display: ${showDel ? 'block' : 'none'};
 				`}
+				onClickDelBtn={onClickDelBtn}
 			/>
 		</motion.div>
 	);

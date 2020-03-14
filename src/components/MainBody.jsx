@@ -1,17 +1,24 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { memo } from "react";
+import { memo } from 'react';
 
-const MainBody = ({children})=>{
-  return (
-    <div css={css`
-      width: 100%;
-      display: flex;
-      height: calc(100% - 68px);
-    `}>
-      {children}
-    </div>
-  )
-}
+import RichTextExample from './editor/RichTextExample'
+
+const MainBody = ({ children }) => {
+	return (
+		<div
+			css={css`
+				width: 100%;
+				background: #E5E5E5;
+				display: flex;
+				justify-content: center;
+				height: calc(100% - 68px);
+			`}
+		>
+			{children}
+			<RichTextExample />
+		</div>
+	);
+};
 
 export default memo(MainBody);

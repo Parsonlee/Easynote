@@ -30,7 +30,8 @@ const Sidebar = ({ show, children }) => {
 			css={css`
 				height: 100%;
 				width: ${between('150px', '240px')};
-				border-right: 1px solid ${theme.color.divider};
+				z-index: 1;
+				/* border-right: 1px solid ${theme.color.divider}; */
 				background: ${theme.background.backdrop};
 				overflow-y: auto;
 				overflow-x: hidden;

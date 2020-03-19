@@ -1,8 +1,8 @@
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, memo, useRef } from 'react';
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cover } from 'polished';
@@ -33,24 +33,43 @@ const RippleVariants = {
 		opacity: 0
 	}
 };
+const iconBarVariants = {
+	initial: { x: '100%' },
+	animate: { x: '0' },
+	exit: { x: '100%' }
+};
 
-const MenuBtn = ({ initial = true, onSwitch }) => {
+const iconArrowVariants = {
+	initial: { x: '-100%' },
+	animate: { x: '0' },
+	exit: { x: '-100%' }
+};
+
+const MenuBtn = ({ initial = true, on = false, onTap }) => {
 	const { theme } = useThemeModel();
-	const [onOff, setOnOff] = useState(initial);
+	// const [onOff, setOnOff] = useState(initial);
 	const [rippleCount, setRippleCount] = useState(0);
+	const [iconCount, setIconCount] = useState(0);
 
+	// [useEffect仅更新视图时执行]
+	const isInitMount = useRef(true);
+
+	// 当on参数变化时，并且更新视图时 = icon动画
 	useEffect(() => {
-		onSwitch && onSwitch(onOff);
-	}, [onOff, onSwitch]);
-
-	const switchOnOff = () => [setOnOff(!onOff)];
+		if (isInitMount.current) {
+			isInitMount.current = false;
+		} else {
+			setIconCount(count => count + 1);
+		}
+	}, [on]);
 
 	const handleTap = () => {
-		setRippleCount(rippleCount + 1);
+		setRippleCount(count => count + 1);
+		onTap && onTap();
 	};
 
 	return (
-		<motion.div onTap={switchOnOff}>
+		<motion.div>
 			<StyledMenuBtn
 				variants={MenuBtnVariants}
 				whileHover='hoverStyle'
@@ -71,8 +90,26 @@ const MenuBtn = ({ initial = true, onSwitch }) => {
 						}}
 					/>
 				</AnimatePresence>
-				<FontAwesomeIcon icon={faBars} color='gray' />
+
+				<MotionIcon
+					key={iconCount}
+					variants={!on ? iconBarVariants : iconArrowVariants}
+					icon={on ? faChevronCircleLeft : faBars}
+				/>
 			</StyledMenuBtn>
+		</motion.div>
+	);
+};
+
+const MotionIcon = ({ icon, variants }) => {
+	return (
+		<motion.div
+			variants={variants}
+			initial='initial'
+			animate='animate'
+			exit='exit'
+		>
+			<FontAwesomeIcon icon={icon} color='gray' />
 		</motion.div>
 	);
 };

@@ -158,7 +158,7 @@ const Toolbar = styled.div`
 const EditField = styled.div`
 	background: #ffffff;
 	padding: 40px;
-	width: 82%;
+	width: 75%;
 	height: 100%;
 `;
 

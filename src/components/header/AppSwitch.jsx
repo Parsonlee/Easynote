@@ -6,14 +6,19 @@ import { motion } from 'framer-motion';
 
 import useThemeModel from '../../models/useThemeModel';
 
-const AppSwitch = ({ initial = 0, onSwitch }) => {
+const AppSwitch = ({ initial = 0, onSwitch, activeIndex=0, selfBehave=false }) => {
 	const { theme } = useThemeModel();
 	const [active, setActive] = useState(initial);
 
-	// 给组件暴露switch事件
+	// 接受activeIndex来改变自身active
 	useEffect(() => {
-		onSwitch && onSwitch(active);
-	}, [active, onSwitch]);
+		setActive(activeIndex)
+	}, [activeIndex]);
+
+	const handleClick = index =>{
+		onSwitch && onSwitch(index);
+		selfBehave && setActive(index);
+	}
 
 	return (
 		<StyledAppSwitch theme={theme}>
@@ -21,17 +26,18 @@ const AppSwitch = ({ initial = 0, onSwitch }) => {
 				theme={theme}
 				active={active}
 				animate={{
-					left: active ? '40%' : '0%'
+					left: active ? '40%' : '0%',
+					transition: { ease: 'easeOut', duration: '0.3' }
 				}}
 			/>
 			<div
-				onClick={() => setActive(0)}
+				onClick={() => handleClick(0)}
 				className={`item note ${active === 0 ? 'active' : null}`}
 			>
 				{active === 0 ? '笔记' : <FontAwesomeIcon icon={faBook} />}
 			</div>
 			<div
-				onClick={() => setActive(1)}
+				onClick={() => handleClick(1)}
 				className={`item todo ${active === 1 ? 'active' : null}`}
 			>
 				{active === 1 ? '待办' : <FontAwesomeIcon icon={faCalendarCheck} />}
@@ -41,13 +47,13 @@ const AppSwitch = ({ initial = 0, onSwitch }) => {
 };
 
 const StyledActive = styled(motion.div)`
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  width: 60%;
-  height: 100%;
-  background: ${({ theme }) => theme.button.background};
-  border-radius: 50px;
+	position: absolute;
+	z-index: 0;
+	left: 0;
+	width: 60%;
+	height: 100%;
+	background: ${({ theme }) => theme.button.background};
+	border-radius: 50px;
 `;
 
 const StyledAppSwitch = styled.div`

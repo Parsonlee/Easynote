@@ -31,7 +31,7 @@ const CreateBtn = ({ children = '+写文章', onTap, onClick }) => {
 				whileHover={{ scale: 0.9 }}
 				whileTap={{ scale: 1.1 }}
 				css={css`
-					padding: 10px 28px;
+					padding: 10px 10px;
 				`}
 			>
 				{children}

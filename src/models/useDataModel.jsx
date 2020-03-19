@@ -122,12 +122,15 @@ const initData = [
 
 function useData() {
 	const [data, setData] = useState(initData);
-	const deleteByIndex = index => data.filter((item, i) => index === i);
+	
+	const deleteByContentId = contentId => {
+		setData(data.filter(item => item.contentId !== contentId));
+	};
 
 	return {
 		data,
 		setData,
-		deleteByIndex
+		deleteByContentId
 	};
 }
 

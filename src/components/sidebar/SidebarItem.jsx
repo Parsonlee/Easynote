@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { ellipsis } from 'polished';
@@ -8,9 +8,17 @@ import SidebarDelBtn from './SidebarDelBtn';
 
 import useThemeModel from '../../models/useThemeModel';
 
-const SideListItem = ({ title, desription, date, timeBefore, active, onTap, index, onClickDelBtn }) => {
+const SideListItem = ({ title, desription, date, timeBefore, active, onTap, onClickDelBtn }) => {
 	const { theme } = useThemeModel();
 	const [showDel, setShowDel] = useState(false);
+	
+	const handleHoverStart = () => {
+		setShowDel(true);
+	};
+	const handleHoverEnd = () => {
+		setShowDel(false);
+	};
+	
 	// 挂载动画
 	const variants = {
 		initial: {
@@ -30,24 +38,13 @@ const SideListItem = ({ title, desription, date, timeBefore, active, onTap, inde
 		}
 	};
 
-	const handleHoverStart = () => {
-		setShowDel(true);
-	};
-	const handleHoverEnd = () => {
-		setShowDel(false);
-	};
-	const handleTap = ()=>{
-    if(index===0) onTap(0)
-    if(index) onTap(index)
-  }
-
 	return (
 		<motion.div
 			variants={variants}
 			initial='initial'
 			animate='animate'
 			exit='exit'
-			onTap={handleTap}
+			onTap={onTap}
 			onHoverStart={handleHoverStart}
 			onHoverEnd={handleHoverEnd}
 			css={css`
@@ -120,4 +117,4 @@ const SideListItem = ({ title, desription, date, timeBefore, active, onTap, inde
 	);
 };
 
-export default SideListItem;
+export default memo(SideListItem);

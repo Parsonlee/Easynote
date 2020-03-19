@@ -9,7 +9,7 @@ const SidebarDelBtn = ({ onClickDelBtn, ...props }) => {
 	const { theme } = useThemeModel();
 
 	const handleClick = e => {
-		e.stopPropagation();
+		e.stopPropagation();	// 阻止事件冒泡
 		onClickDelBtn && onClickDelBtn(e);
 	};
 

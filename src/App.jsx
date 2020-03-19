@@ -1,8 +1,8 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, memo } from 'react';
 /** @jsx jsx */
 import { jsx, css, Global } from '@emotion/core';
 import { normalize } from 'polished';
-import { useHistory, Route, Switch } from 'react-router-dom';
+import { useHistory, Route, Switch, Redirect } from 'react-router-dom';
 
 import Container from './components/Container';
 import MainBody from './components/MainBody';
@@ -10,85 +10,83 @@ import Header from './components/header/Header';
 import MenuBtn from './components/header/MenuBtn';
 import AppSwitch from './components/header/AppSwitch';
 import CreateBtn from './components/header/CreateBtn';
+import User from './components/header/User';
 import Sidebar from './components/sidebar/Sidebar';
-import SidebarItem from './components/sidebar/SidebarItem';
-import NoPage from './components/NoPage';
+import NoPage from './components/noFound/NoPage';
+import NoContent from './components/noFound/NoContent';
+import Note from './components/content/Note';
 
 import useThemeModel from './models/useThemeModel';
-import useDataModel from './models/useDataModel';
 
 /*-------------- App ----------------*/
 const App = props => {
 	const { theme } = useThemeModel();
 	const history = useHistory();
 
-	// 文章data
-	const { data, deleteByIndex } = useDataModel();
-
 	// 侧栏
 	const [showSidebar, setShowSidebar] = useState(true);
-	const [activeIndex, setActiveIndex] = useState(0);
-	const handleMenuBtnSwitch = useCallback(onOff => {
-		setShowSidebar(onOff);
-	}, []);
 
-	// 主功能切换
+	// app category切换
 	const [category, setCategory] = useState(0);
-	const handleCategorySwitch = useCallback(
-		active => {
-			setCategory(active);
-		},
-		[setCategory]
-	);
-	const categoryParam = useMemo(() => (category === 0 ? 'note' : 'todo'), [
-		category
-	]);
-
-	// 侧栏导航
-	const handleClickItem = (contentId, index) => {
-		// history.push(`/${categoryParam}/${contentId}`); // 切换导航
-		setActiveIndex(index); // 激活index对应侧栏item
+	const handleCategorySwitch = index => {
+		history.push(`/${!index ? 'note' : 'todo'}`);
+		setCategory(index);
 	};
 
 	// 创建文章
 	const handleTapCreate = () => {
-		// do something to create a note
+		// 创建文章
+	};
+
+	// 用户视图
+	const handleClickUser = () => {
+		// 进入用户界面
 	};
 
 	return (
 		<StyledApp theme={theme}>
 			<Container>
 				<Header>
-					<MenuBtn initial={true} onSwitch={handleMenuBtnSwitch} />
-					<AppSwitch initial={0} onSwitch={handleCategorySwitch} />
+					<MenuBtn
+						initial={true}
+						on={showSidebar}
+						onTap={() => setShowSidebar(!showSidebar)}
+					/>
+					<AppSwitch activeIndex={category} onSwitch={handleCategorySwitch} />
 					<CreateBtn onTap={handleTapCreate}>+ 写文章</CreateBtn>
+					<User onClick={handleClickUser}>
+						<img
+							src='https://cdn2.ettoday.net/images/2194/d2194378.jpg'
+							alt='wtf'
+						/>
+					</User>
 				</Header>
 
+				<Route exact path='/' render={() => <Redirect to='/note' />} />
 				<Switch>
-					<Route exact path='/'>
+					<Route exact path='/note'>
 						<MainBody>
-							<Sidebar show={showSidebar}>
-								{data.map((item, i) => {
-									return (
-										item.category === 'note' && (
-											<SidebarItem
-												key={item.id}
-												title={item.content.title}
-												desription={item.content.body[0]['content']}
-												date={item.createdTime}
-												timeBefore='3小时前'
-												active={i === activeIndex}
-												index={i}
-												onTap={index => handleClickItem(item.contentId, index)}
-												onClickDelBtn={() => deleteByIndex(i)}
-											/>
-										)
-									);
-								})}
-							</Sidebar>
+							<Route exact path='/note'>
+								<Sidebar category='note' show={showSidebar} />
+								<NoContent />
+							</Route>
+
+							<Switch>
+								<Route path='/note/nocontent'>
+									<Sidebar category='note' show={showSidebar} />
+									<NoContent />
+								</Route>
+								<Route path='/note/:contentId'>
+									<Sidebar category='note' show={showSidebar} />
+									<Note></Note>
+								</Route>
+							</Switch>
 						</MainBody>
 					</Route>
-					<Route component={NoPage} />
+
+					<Route>
+						<NoPage redirectTo={!category ? 'note' : 'todo'} />
+					</Route>
 				</Switch>
 			</Container>
 		</StyledApp>
@@ -122,4 +120,4 @@ const StyledApp = ({ theme, children }) => {
 	);
 };
 
-export default App;
+export default memo(App);

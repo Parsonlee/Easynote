@@ -2,9 +2,9 @@
 import { jsx, css } from '@emotion/core';
 import { Link } from 'react-router-dom';
 
-import useThemeModel from '../models/useThemeModel';
+import useThemeModel from '../../models/useThemeModel';
 
-const NoPage = () => {
+const NoPage = ({redirectTo}) => {
 	const { theme } = useThemeModel();
 
 	return (
@@ -23,7 +23,7 @@ const NoPage = () => {
 				}
 			`}
 		>
-			没找到你想要的,&nbsp;<Link to='/'> 点击回首页</Link>
+			没找到你想要的,&nbsp;<Link to={`/${redirectTo}`}> 点击回首页</Link>
 		</div>
 	);
 };

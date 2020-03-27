@@ -14,7 +14,8 @@ import User from './components/header/User';
 import Sidebar from './components/sidebar/Sidebar';
 import NoPage from './components/noFound/NoPage';
 import NoContent from './components/noFound/NoContent';
-import Note from './components/content/Note';
+
+import RichTextDemo from './components/content/noteEditor/RichTextDemo';
 
 import useThemeModel from './models/useThemeModel';
 
@@ -64,6 +65,7 @@ const App = props => {
 
 				<Route exact path='/' render={() => <Redirect to='/note' />} />
 				<Switch>
+					{/* ----------------note---------------- */}
 					<Route exact path='/note'>
 						<MainBody>
 							<Route exact path='/note'>
@@ -78,15 +80,21 @@ const App = props => {
 								</Route>
 								<Route path='/note/:contentId'>
 									<Sidebar category='note' show={showSidebar} />
-									<Note></Note>
+									<RichTextDemo />
 								</Route>
 							</Switch>
 						</MainBody>
 					</Route>
 
+					{/* ----------------todo---------------- */}
+					<Route exact path='/todo'>
+
+					</Route>
+
 					<Route>
 						<NoPage redirectTo={!category ? 'note' : 'todo'} />
 					</Route>
+
 				</Switch>
 			</Container>
 		</StyledApp>

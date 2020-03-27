@@ -12,7 +12,7 @@ import {
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 
-const RichTextExample = () => {
+const RichTextDemo = () => {
 	const [value, setValue] = useState(initialValue);
 	const renderElement = useCallback(props => <Element {...props} />, []);
 	const renderLeaf = useCallback(props => <Leaf {...props} />, []);
@@ -156,10 +156,13 @@ const Toolbar = styled.div`
 `;
 
 const EditField = styled.div`
+	position: relative;
 	background: #ffffff;
-	padding: 40px;
+	padding: 20px 40px;
 	width: 75%;
 	height: 100%;
+	margin: 0 auto;
+	outline: none;
 `;
 
 const initialValue = [
@@ -195,4 +198,5 @@ const initialValue = [
 	}
 ];
 
-export default RichTextExample;
+
+export default RichTextDemo;

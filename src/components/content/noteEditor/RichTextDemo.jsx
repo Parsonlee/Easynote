@@ -16,7 +16,9 @@ import { useParams } from 'react-router-dom';
 const RichTextDemo = () => {
 	const params = useParams();
 
-	const [value, setValue] = useState(initialValue);
+	const [value, setValue] = useState(
+		JSON.parse(localStorage.getItem('contentTest')) || initialValue
+	);
 	const renderElement = useCallback(props => <Element {...props} />, []);
 	const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 	const editor = useMemo(() => withReact(createEditor()), []);
@@ -24,7 +26,16 @@ const RichTextDemo = () => {
 	return (
 		<EditField>
 			<h2>I'm {params.contentId}</h2>
-			<Slate editor={editor} value={value} onChange={value => setValue(value)}>
+			<Slate
+				editor={editor}
+				value={value}
+				onChange={value => {
+					setValue(value);
+					const content = JSON.stringify(value);
+					console.log(content);
+					localStorage.setItem('contentTest', content);
+				}}
+			>
 				<Toolbar>
 					<MarkButton format='bold'>
 						<FontAwesomeIcon icon={faBold} />
@@ -46,7 +57,6 @@ const RichTextDemo = () => {
 					renderElement={renderElement}
 					renderLeaf={renderLeaf}
 					placeholder='Enter some rich text…'
-					spellCheck
 					autoFocus
 				/>
 			</Slate>

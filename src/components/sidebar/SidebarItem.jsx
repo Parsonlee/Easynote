@@ -8,17 +8,25 @@ import SidebarDelBtn from './SidebarDelBtn';
 
 import useThemeModel from '../../models/useThemeModel';
 
-const SideListItem = ({ title, desription, date, timeBefore, active, onTap, onClickDelBtn }) => {
+const SideListItem = ({
+	title,
+	desription,
+	date,
+	timeBefore,
+	active,
+	onTap,
+	onClickDelBtn
+}) => {
 	const { theme } = useThemeModel();
 	const [showDel, setShowDel] = useState(false);
-	
+
 	const handleHoverStart = () => {
 		setShowDel(true);
 	};
 	const handleHoverEnd = () => {
 		setShowDel(false);
 	};
-	
+
 	// 挂载动画
 	const variants = {
 		initial: {

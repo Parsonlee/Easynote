@@ -11,8 +11,11 @@ import {
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
+import { useParams } from 'react-router-dom';
 
 const RichTextDemo = () => {
+	const params = useParams();
+
 	const [value, setValue] = useState(initialValue);
 	const renderElement = useCallback(props => <Element {...props} />, []);
 	const renderLeaf = useCallback(props => <Leaf {...props} />, []);
@@ -20,6 +23,7 @@ const RichTextDemo = () => {
 
 	return (
 		<EditField>
+			<h2>I'm {params.contentId}</h2>
 			<Slate editor={editor} value={value} onChange={value => setValue(value)}>
 				<Toolbar>
 					<MarkButton format='bold'>
@@ -197,6 +201,5 @@ const initialValue = [
 		children: [{ text: 'Try it out for yourself!' }]
 	}
 ];
-
 
 export default RichTextDemo;

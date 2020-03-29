@@ -66,35 +66,28 @@ const App = props => {
 				<Route exact path='/' render={() => <Redirect to='/note' />} />
 				<Switch>
 					{/* ----------------note---------------- */}
-					<Route exact path='/note'>
+					<Route path='/note'>
 						<MainBody>
-							<Route exact path='/note'>
-								<Sidebar category='note' show={showSidebar} />
-								<NoContent />
-							</Route>
-
 							<Switch>
-								<Route path='/note/nocontent'>
-									<Sidebar category='note' show={showSidebar} />
-									<NoContent />
-								</Route>
 								<Route path='/note/:contentId'>
 									<Sidebar category='note' show={showSidebar} />
-									<RichTextDemo />
+									<RichTextDemo></RichTextDemo>
+								</Route>
+
+								<Route path='/note'>
+									<Sidebar category='note' show={showSidebar} />
+									<NoContent />
 								</Route>
 							</Switch>
 						</MainBody>
 					</Route>
 
 					{/* ----------------todo---------------- */}
-					<Route exact path='/todo'>
-
-					</Route>
+					<Route path='/todo'></Route>
 
 					<Route>
 						<NoPage redirectTo={!category ? 'note' : 'todo'} />
 					</Route>
-
 				</Switch>
 			</Container>
 		</StyledApp>

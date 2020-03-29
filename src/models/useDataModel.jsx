@@ -17,12 +17,6 @@ const initData = [
 					behave: 'h1',
 					content: 'dasdafafadasdad'
 				},
-				{
-					id: uuid(),
-					behave: 'link',
-					content: '百度',
-					linkUrl: 'https://www.baidu.com'
-				}
 			]
 		}
 	},
@@ -38,14 +32,8 @@ const initData = [
 				{
 					id: uuid(),
 					behave: 'h1',
-					content: 'dasdafafadasdad'
+					content: 'shabi'
 				},
-				{
-					id: uuid(),
-					behave: 'link',
-					content: '百度',
-					linkUrl: 'https://www.baidu.com'
-				}
 			]
 		}
 	},
@@ -56,19 +44,13 @@ const initData = [
 		createdTime: '2020-03-10',
 		updatedTime: '2020-03-11 00:52:49',
 		content: {
-			title: '把👴整笑了',
+			title: '把👵整笑了',
 			body: [
 				{
 					id: uuid(),
 					behave: 'h1',
-					content: 'dasdafafadasdad'
+					content: 'hajsildjlad'
 				},
-				{
-					id: uuid(),
-					behave: 'link',
-					content: '百度',
-					linkUrl: 'https://www.baidu.com'
-				}
 			]
 		}
 	},
@@ -79,19 +61,13 @@ const initData = [
 		createdTime: '2020-03-10',
 		updatedTime: '2020-03-11 00:52:49',
 		content: {
-			title: '把👴整笑了',
+			title: '把👳整笑了',
 			body: [
 				{
 					id: uuid(),
 					behave: 'h1',
-					content: 'dasdafafadasdad'
+					content: 'iqwueiouqowie'
 				},
-				{
-					id: uuid(),
-					behave: 'link',
-					content: '百度',
-					linkUrl: 'https://www.baidu.com'
-				}
 			]
 		}
 	},
@@ -102,19 +78,13 @@ const initData = [
 		createdTime: '2020-03-10',
 		updatedTime: '2020-03-11 00:52:49',
 		content: {
-			title: '把👴整笑了',
+			title: '把👲整笑了',
 			body: [
 				{
 					id: uuid(),
 					behave: 'h1',
-					content: 'dasdafafadasdad'
+					content: 'jahsjhdjkasd'
 				},
-				{
-					id: uuid(),
-					behave: 'link',
-					content: '百度',
-					linkUrl: 'https://www.baidu.com'
-				}
 			]
 		}
 	}

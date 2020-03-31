@@ -55,7 +55,7 @@ const RichTextDemo = () => {
 						<FontAwesomeIcon icon={faHeading} />
 					</BlockButton>
 				</Toolbar>
-				<h3>I'm {params.contentId}</h3>
+				<h3>I'm {params.contentId} ,this sentence is for test.</h3>
 				<Editable
 					renderElement={renderElement}
 					renderLeaf={renderLeaf}

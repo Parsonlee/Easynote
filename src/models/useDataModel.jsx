@@ -17,9 +17,9 @@ const initData = [
 		category: 'note',
 		createdTime: '2020-03-10',
 		updatedTime: '2020-03-11 00:20:50',
-		title: '把👴整笑了',
+		title: JSON.parse(localStorage.getItem(1))[0].children[0].text,
 		content: {
-			description: JSON.parse(localStorage.getItem(1))[0].children[0].text,
+			description: JSON.parse(localStorage.getItem(1))[1].children[0].text,
 		}
 	},
 	{
@@ -27,9 +27,9 @@ const initData = [
 		category: 'note',
 		createdTime: '2020-03-10',
 		updatedTime: '2020-03-11 22:22:22',
-		title: '把👵整笑了',
+		title: JSON.parse(localStorage.getItem(2))[0].children[0].text,
 		content: {
-			description: JSON.parse(localStorage.getItem(2))[0].children[0].text,
+			description: JSON.parse(localStorage.getItem(2))[1].children[0].text,
 		}
 	},
 	{
@@ -37,9 +37,9 @@ const initData = [
 		category: 'note',
 		createdTime: '2020-03-10',
 		updatedTime: '2020-03-11 10:30:49',
-		title: '把👳整笑了',
+		title: JSON.parse(localStorage.getItem(3))[0].children[0].text,
 		content: {
-			description: JSON.parse(localStorage.getItem(3))[0].children[0].text,
+			description: JSON.parse(localStorage.getItem(3))[1].children[0].text,
 		}
 	},
 	{
@@ -47,9 +47,9 @@ const initData = [
 		category: 'note',
 		createdTime: '2020-03-10',
 		updatedTime: '2020-03-11 20:38:00',
-		title: '把👲整笑了',
+		title: JSON.parse(localStorage.getItem(4))[0].children[0].text,
 		content: {
-			description: JSON.parse(localStorage.getItem(4))[0].children[0].text,
+			description: JSON.parse(localStorage.getItem(4))[1].children[0].text,
 		}
 	}
 ];

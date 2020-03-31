@@ -64,6 +64,7 @@ const SideListItem = ({
 					? theme.background.base
 					: theme.background.backdrop};
 				cursor: pointer;
+				border-bottom: 1px solid #f1f1f1;
 				&:hover {
 					background: ${theme.background.base};
 				}

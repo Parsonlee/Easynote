@@ -1,98 +1,62 @@
 import { createModel } from 'hox';
 import { useState } from 'react';
-import { uuid } from 'uuidv4';
 
 const initData = [
 	{
-		id: '0',
-		category: 'note',
 		contentId: '0',
+		category: 'note',
 		createdTime: '2020-03-10',
 		updatedTime: '2020-03-11 00:52:49',
+		title: JSON.parse(localStorage.getItem(0))[0].children[0].text,
 		content: {
-			title: '🌈🌈Easynote是真的🐂🍺',
-			body: [
-				{
-					id: uuid(),
-					behave: 'h1',
-					content: 'dasdafafadasdad'
-				},
-			]
+			description: JSON.parse(localStorage.getItem(0))[1].children[0].text,
 		}
 	},
 	{
-		id: '1',
-		category: 'note',
 		contentId: '1',
+		category: 'note',
 		createdTime: '2020-03-10',
-		updatedTime: '2020-03-11 00:52:49',
+		updatedTime: '2020-03-11 00:20:50',
+		title: '把👴整笑了',
 		content: {
-			title: '把👴整笑了',
-			body: [
-				{
-					id: uuid(),
-					behave: 'h1',
-					content: 'shabi'
-				},
-			]
+			description: JSON.parse(localStorage.getItem(1))[0].children[0].text,
 		}
 	},
 	{
-		id: '2',
-		category: 'note',
 		contentId: '2',
+		category: 'note',
 		createdTime: '2020-03-10',
-		updatedTime: '2020-03-11 00:52:49',
+		updatedTime: '2020-03-11 22:22:22',
+		title: '把👵整笑了',
 		content: {
-			title: '把👵整笑了',
-			body: [
-				{
-					id: uuid(),
-					behave: 'h1',
-					content: 'hajsildjlad'
-				},
-			]
+			description: JSON.parse(localStorage.getItem(2))[0].children[0].text,
 		}
 	},
 	{
-		id: '3',
-		category: 'note',
 		contentId: '3',
+		category: 'note',
 		createdTime: '2020-03-10',
-		updatedTime: '2020-03-11 00:52:49',
+		updatedTime: '2020-03-11 10:30:49',
+		title: '把👳整笑了',
 		content: {
-			title: '把👳整笑了',
-			body: [
-				{
-					id: uuid(),
-					behave: 'h1',
-					content: 'iqwueiouqowie'
-				},
-			]
+			description: JSON.parse(localStorage.getItem(3))[0].children[0].text,
 		}
 	},
 	{
-		id: '4',
-		category: 'note',
 		contentId: '4',
+		category: 'note',
 		createdTime: '2020-03-10',
-		updatedTime: '2020-03-11 00:52:49',
+		updatedTime: '2020-03-11 20:38:00',
+		title: '把👲整笑了',
 		content: {
-			title: '把👲整笑了',
-			body: [
-				{
-					id: uuid(),
-					behave: 'h1',
-					content: 'jahsjhdjkasd'
-				},
-			]
+			description: JSON.parse(localStorage.getItem(4))[0].children[0].text,
 		}
 	}
 ];
 
 function useData() {
 	const [data, setData] = useState(initData);
-	
+
 	const deleteByContentId = contentId => {
 		setData(data.filter(item => item.contentId !== contentId));
 	};

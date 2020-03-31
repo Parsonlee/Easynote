@@ -16,7 +16,8 @@ router.post('/login', async ctx => {
 				id: results[0].id,
 				username: results[0].username
 			},
-			config.jwtSecret
+			config.jwtSecret,
+			{ expiresIn: 3 * 60 * 60 }
 		);
 		ctx.body = token;
 	} else {

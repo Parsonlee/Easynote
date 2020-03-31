@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { Editable, withReact, useSlate, Slate } from 'slate-react';
 import { Editor, Transforms, createEditor } from 'slate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,25 +15,27 @@ import { useParams } from 'react-router-dom';
 
 const RichTextDemo = () => {
 	const params = useParams();
-
 	const [value, setValue] = useState(
-		JSON.parse(localStorage.getItem('contentTest')) || initialValue
+		JSON.parse(localStorage.getItem(`${params.contentId}`)) || initialValue
 	);
+
+	useEffect(() => {
+		setValue(JSON.parse(localStorage.getItem(`${params.contentId}`)));
+	}, [params.contentId]);
+
 	const renderElement = useCallback(props => <Element {...props} />, []);
 	const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 	const editor = useMemo(() => withReact(createEditor()), []);
 
 	return (
 		<EditField>
-			<h2>I'm {params.contentId}</h2>
 			<Slate
 				editor={editor}
 				value={value}
 				onChange={value => {
 					setValue(value);
 					const content = JSON.stringify(value);
-					console.log(content);
-					localStorage.setItem('contentTest', content);
+					localStorage.setItem(`${params.contentId}`, content);
 				}}
 			>
 				<Toolbar>
@@ -53,6 +55,7 @@ const RichTextDemo = () => {
 						<FontAwesomeIcon icon={faHeading} />
 					</BlockButton>
 				</Toolbar>
+				<h3>I'm {params.contentId}</h3>
 				<Editable
 					renderElement={renderElement}
 					renderLeaf={renderLeaf}
@@ -73,7 +76,7 @@ const toggleBlock = (editor, format) => {
 };
 
 const toggleMark = (editor, format) => {
-	const isActive = isMarkActive(editor, format);
+	const isActive = isMarkActive(editor, format) ? 1 : undefined;
 
 	if (isActive) {
 		Editor.removeMark(editor, format);
@@ -128,7 +131,7 @@ const BlockButton = ({ format, children }) => {
 				margin-left: 15px;
 				color: ${format ? 'black' : '#aaa'};
 			`}
-			active={isBlockActive(editor, format)}
+			active={isBlockActive(editor, format) ? 1 : undefined}
 			onMouseDown={e => {
 				e.preventDefault();
 				toggleBlock(editor, format);
@@ -148,7 +151,7 @@ const MarkButton = ({ format, children }) => {
 				margin-left: 15px;
 				color: ${format ? 'black' : '#aaa'};
 			`}
-			active={isMarkActive(editor, format)}
+			active={isMarkActive(editor, format) ? 1 : undefined}
 			onMouseDown={e => {
 				e.preventDefault();
 				toggleMark(editor, format);
@@ -172,7 +175,7 @@ const Toolbar = styled.div`
 const EditField = styled.div`
 	position: relative;
 	background: #ffffff;
-	padding: 20px 40px;
+	padding: 20px 45px;
 	width: 75%;
 	height: 100%;
 	margin: 0 auto;

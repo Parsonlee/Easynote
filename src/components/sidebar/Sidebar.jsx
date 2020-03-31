@@ -74,9 +74,9 @@ const Sidebar = ({ show, category }) => {
 					return (
 						item.category === category && (
 							<SidebarItem
-								key={item.id}
-								title={item.content.title}
-								desription={item.content.body[0][`content`]}
+								key={item.contentId}
+								title={item.title}
+								desription={item.content.description}
 								date={item.createdTime}
 								timeBefore='3小时前'
 								active={item.contentId === params.contentId}

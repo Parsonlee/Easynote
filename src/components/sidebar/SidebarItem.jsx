@@ -9,10 +9,12 @@ import SidebarDelBtn from './SidebarDelBtn';
 import useThemeModel from '../../models/useThemeModel';
 
 const SideListItem = ({
+	// 数据
 	title,
 	desription,
 	date,
-	timeBefore,
+	updateTime,
+	// 数据
 	active,
 	onTap,
 	onClickDelBtn
@@ -110,7 +112,7 @@ const SideListItem = ({
 			<p>{desription}</p>
 			<div className='time'>
 				<span className='time-date'>{date}</span>
-				<span className='time-before'>{timeBefore}</span>
+				<span className='time-before'>{updateTime}</span>
 			</div>
 			<SidebarDelBtn
 				css={css`

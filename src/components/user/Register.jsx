@@ -68,7 +68,7 @@ const Register = () => {
 				align-items: center;
 			`}
 		>
-			<FormTitle theme={theme}>注册</FormTitle>
+			<FormTitle theme={theme}>注册新用户</FormTitle>
 			<div>
 				<FormLabel theme={theme}>用户名：</FormLabel>
 				<br />
@@ -119,7 +119,7 @@ const Register = () => {
 			</div>
 			<br />
 			<FormBtn disabled={isLoading || invalid} theme={theme}>
-				登录
+				注册
 			</FormBtn>
 		</form>
 	);

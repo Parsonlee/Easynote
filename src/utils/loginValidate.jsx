@@ -10,5 +10,5 @@ export const validateInput = data => {
 		errors.password = '请输入密码';
 	}
 
-	return { erros, isValid: isEmpty(errors) };
+	return { errors, isValid: isEmpty(errors) };
 };

@@ -19,6 +19,7 @@ import Register from './components/user/Register';
 import RichTextDemo from './components/content/noteEditor/RichTextDemo';
 
 import useThemeModel from './models/useThemeModel';
+import Login from './components/user/Login';
 
 /*-------------- App ----------------*/
 const App = props => {
@@ -48,23 +49,28 @@ const App = props => {
 	return (
 		<StyledApp theme={theme}>
 			<Container>
-				<Header>
-					<MenuBtn
-						initial={true}
-						on={showSidebar}
-						onTap={() => setShowSidebar(!showSidebar)}
-					/>
-					<AppSwitch activeIndex={category} onSwitch={handleCategorySwitch} />
-					<CreateBtn onTap={handleTapCreate}>+ 写文章</CreateBtn>
-					<User onClick={handleClickUser}>
-						<img
-							src='https://cdn2.ettoday.net/images/2194/d2194378.jpg'
-							alt='wtf'
-						/>
-					</User>
-				</Header>
+				<Switch>
+					<Route exact path='/register' component={Register} />
+					<Route exact path='/login' component={Login}/>
+					<Route>
+						<Header>
+							<MenuBtn
+								initial={true}
+								on={showSidebar}
+								onTap={() => setShowSidebar(!showSidebar)}
+							/>
+							<AppSwitch activeIndex={category} onSwitch={handleCategorySwitch} />
+							<CreateBtn onTap={handleTapCreate}>+ 写文章</CreateBtn>
+							<User onClick={handleClickUser}>
+								<img
+									src='https://cdn2.ettoday.net/images/2194/d2194378.jpg'
+									alt='wtf'
+								/>
+							</User>
+						</Header>
+					</Route>
+				</Switch>
 
-				<Route exact path='/register' component={Register} />
 				<Route exact path='/' render={() => <Redirect to='/note' />} />
 				<Switch>
 					{/* ----------------note---------------- */}

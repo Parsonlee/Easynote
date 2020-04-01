@@ -38,16 +38,14 @@ const iconBarVariants = {
 	animate: { x: '0' },
 	exit: { x: '100%' }
 };
-
 const iconArrowVariants = {
 	initial: { x: '-100%' },
 	animate: { x: '0' },
 	exit: { x: '-100%' }
 };
 
-const MenuBtn = ({ initial = true, on = false, onTap }) => {
+const MenuBtn = ({ on = false, onTap }) => {
 	const { theme } = useThemeModel();
-	// const [onOff, setOnOff] = useState(initial);
 	const [rippleCount, setRippleCount] = useState(0);
 	const [iconCount, setIconCount] = useState(0);
 

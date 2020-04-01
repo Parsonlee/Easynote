@@ -11,7 +11,7 @@ const Header = ({ children }) => {
 		<div
 			css={css`
 				padding: 0 17px;
-				height: 68px;
+				height: 70px;
 				border-bottom: 1px solid ${theme.color.divider};
 				display: flex;
 				align-items: center;

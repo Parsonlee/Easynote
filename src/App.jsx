@@ -10,10 +10,11 @@ import Header from './components/header/Header';
 import MenuBtn from './components/header/MenuBtn';
 import AppSwitch from './components/header/AppSwitch';
 import CreateBtn from './components/header/CreateBtn';
-import User from './components/header/User';
 import Sidebar from './components/sidebar/Sidebar';
 import NoPage from './components/noFound/NoPage';
 import NoContent from './components/noFound/NoContent';
+import User from './components/header/User';
+import Register from './components/user/Register';
 
 import RichTextDemo from './components/content/noteEditor/RichTextDemo';
 
@@ -63,20 +64,24 @@ const App = props => {
 					</User>
 				</Header>
 
+				<Route exact path='/register' component={Register} />
 				<Route exact path='/' render={() => <Redirect to='/note' />} />
 				<Switch>
 					{/* ----------------note---------------- */}
 					<Route path='/note'>
 						<MainBody>
 							<Switch>
+								<Route exact path='/note'>
+									<Sidebar category='note' show={showSidebar} />
+									<NoContent />
+								</Route>
+								<Route path='/note/nocontent'>
+									<Sidebar category='note' show={showSidebar} />
+									<NoContent />
+								</Route>
 								<Route path='/note/:contentId'>
 									<Sidebar category='note' show={showSidebar} />
 									<RichTextDemo></RichTextDemo>
-								</Route>
-
-								<Route path='/note'>
-									<Sidebar category='note' show={showSidebar} />
-									<NoContent />
 								</Route>
 							</Switch>
 						</MainBody>
@@ -85,9 +90,7 @@ const App = props => {
 					{/* ----------------todo---------------- */}
 					<Route path='/todo'></Route>
 
-					<Route>
-						<NoPage redirectTo={!category ? 'note' : 'todo'} />
-					</Route>
+					{/* <Route><NoPage redirectTo={!category ? 'note' : 'todo'} /></Route> */}
 				</Switch>
 			</Container>
 		</StyledApp>

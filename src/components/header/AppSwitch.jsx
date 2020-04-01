@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faCalendarCheck } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
@@ -40,7 +40,7 @@ const AppSwitch = ({ initial = 0, onSwitch, activeIndex=0, selfBehave=false }) =
 				onClick={() => handleClick(1)}
 				className={`item todo ${active === 1 ? 'active' : null}`}
 			>
-				{active === 1 ? '待办' : <FontAwesomeIcon icon={faCalendarCheck} />}
+				{active === 1 ? '待办' : <FontAwesomeIcon icon={faClipboardList} />}
 			</div>
 		</StyledAppSwitch>
 	);

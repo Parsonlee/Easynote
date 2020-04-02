@@ -2,7 +2,7 @@ import { useState } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { withRouter, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import useThemeModel from '../../models/useThemeModel';
 
@@ -79,7 +79,7 @@ const Register = () => {
 					value={state.username}
 					onChange={onChange}
 					onBlur={checkUserExist}
-					// className={errors.username ? 'error' : ''}  //验证失败时的样式
+					// className={errors.username ? 'invalid' : ''}  //验证失败时的样式
 				/>
 				{/* {errors.username && (
 					<span className='erros-text'>{errors.username}</span> //显示错误信息
@@ -95,7 +95,7 @@ const Register = () => {
 					name='password'
 					value={state.password}
 					onChange={onChange}
-					// className={errors.password ? 'error' : ''}  //验证失败时的样式
+					// className={errors.password ? 'invalid' : ''}  //验证失败时的样式
 				/>
 				{/* {errors.password && (
 					<span className='erros-text'>{errors.password}</span> //显示错误信息
@@ -111,7 +111,7 @@ const Register = () => {
 					name='passwordConfirm'
 					value={state.passwordConfirm}
 					onChange={onChange}
-					// className={errors.passwordConfirm ? 'error' : ''} //验证失败时的样式
+					// className={errors.passwordConfirm ? 'invalid' : ''} //验证失败时的样式
 				/>
 				{/* {errors.passwordConfirm && (
 					<span className='erros-text'>{errors.passwordConfirm}</span>  //显示错误信息
@@ -138,13 +138,20 @@ export const FormInput = styled.input`
 	background-color: #fff;
 	border: 1px solid #ced4da;
 	border-radius: 0.25rem;
+	&.invalid {
+		border: 1px solid red;
+	}
 `;
+
 export const FormBtn = styled.button`
-	padding: 0.5rem 1rem;
+	padding: 0.25rem 1rem;
 	font-size: 1.25rem;
 	line-height: 1.5;
 	border-radius: 0.3rem;
 	color: ${({ theme }) => theme.button.background};
   cursor: pointer;
+	&:hover{
+		filter:brightness(.97);
+	}
 `;
-export default withRouter(Register);
+export default Register;

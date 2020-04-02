@@ -1,7 +1,7 @@
 import { useState } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { withRouter, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { validateInput } from '../../utils/loginValidate';
 import useThemeModel from '../../models/useThemeModel';
@@ -32,7 +32,7 @@ const Login = () => {
 
 	const onSubmit = e => {
 		e.preventDefault();
-		if (state.isValid()) {
+		if (isValid()) {
 			setState({ errors: {}, isLoading: true });
 			// 登录成功，跳转路由
 			this.props.login(state).then(
@@ -45,6 +45,7 @@ const Login = () => {
 	const { errors, username, password, isLoading } = state;
 	return (
 		<form
+			onSubmit={onSubmit}
 			css={css`
 				width: 100%;
 				height: 100%;
@@ -53,21 +54,21 @@ const Login = () => {
 				flex-direction: column;
 				align-items: center;
 			`}
-			onSubmit={onSubmit}
 		>
 			<FormTitle theme={theme}>用户登录</FormTitle>
 			{/* {typeof errors == 'string' && (
 				<div className='alert-danger'>{errors}</div> //错误信息
 			)} */}
 			<div>
-				<FormLabel theme={theme}>用户名</FormLabel><br/>
+				<FormLabel theme={theme}>用户名</FormLabel>
+				<br />
 				<FormInput
 					theme={theme}
 					type='text'
 					name='text'
 					value={username}
 					onChange={onChange}
-					className={errors.username ? 'error' : ''}
+					// className={errors.username ? 'error' : ''}
 				/>
 				{/* {errors.username && (
 					<span className='erros-text'>{errors.username}</span> //显示错误信息
@@ -75,14 +76,15 @@ const Login = () => {
 			</div>
 			<br />
 			<div>
-				<FormLabel theme={theme}>密码</FormLabel><br/>
+				<FormLabel theme={theme}>密码</FormLabel>
+				<br />
 				<FormInput
 					theme={theme}
 					type='password'
 					name='password'
 					value={password}
 					onChange={onChange}
-					className={errors.password ? 'error' : ''}
+					// className={errors.password ? 'error' : ''}
 				/>
 				{/* {errors.password && (
 					<span className='erros-text'>{errors.username}</span> //显示错误信息
@@ -96,4 +98,4 @@ const Login = () => {
 	);
 };
 
-export default withRouter(Login);
+export default Login;

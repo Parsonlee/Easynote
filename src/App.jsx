@@ -22,10 +22,9 @@ import useThemeModel from './models/useThemeModel';
 import Login from './components/user/Login';
 
 /*-------------- App ----------------*/
-const App = props => {
+const App = () => {
 	const { theme } = useThemeModel();
 	const history = useHistory();
-
 	// 侧栏
 	const [showSidebar, setShowSidebar] = useState(true);
 
@@ -43,15 +42,19 @@ const App = props => {
 
 	// 用户视图
 	const handleClickUser = () => {
-		// 进入用户界面
+		history.push('/register');
 	};
 
 	return (
 		<StyledApp theme={theme}>
 			<Container>
+				<Route exact path='/' render={() => <Redirect to='/note' />} />
+
+				{/*-------------- Header ----------------*/}
 				<Switch>
-					<Route exact path='/register' component={Register} />
-					<Route exact path='/login' component={Login}/>
+					<Route exact path='/register' />
+					<Route exact path='/login' />
+
 					<Route>
 						<Header>
 							<MenuBtn
@@ -59,11 +62,14 @@ const App = props => {
 								on={showSidebar}
 								onTap={() => setShowSidebar(!showSidebar)}
 							/>
-							<AppSwitch activeIndex={category} onSwitch={handleCategorySwitch} />
+							<AppSwitch
+								activeIndex={category}
+								onSwitch={handleCategorySwitch}
+							/>
 							<CreateBtn onTap={handleTapCreate}>+ 写文章</CreateBtn>
 							<User onClick={handleClickUser}>
 								<img
-									src='https://cdn2.ettoday.net/images/2194/d2194378.jpg'
+									src='https://business.bing.com/api/v3/search/person/photo?id=e502bfaa-c47b-4a19-9b60-77d01b1a3bae'
 									alt='wtf'
 								/>
 							</User>
@@ -71,8 +77,16 @@ const App = props => {
 					</Route>
 				</Switch>
 
-				<Route exact path='/' render={() => <Redirect to='/note' />} />
+
+				{/*-------------- Container ----------------*/}
 				<Switch>
+
+					{/*-------------- Login ----------------*/}
+					<Route path='/login' component={Login} />
+
+					{/*-------------- Register ----------------*/}
+					<Route path='/register' component={Register} />
+					
 					{/* ----------------note---------------- */}
 					<Route path='/note'>
 						<MainBody>
@@ -94,17 +108,36 @@ const App = props => {
 					</Route>
 
 					{/* ----------------todo---------------- */}
-					<Route path='/todo'></Route>
+					<Route path='/todo'>
+						<MainBody>
+							<Switch>
+								<Route exact path='/todo'>
+									<Sidebar category='todo' show={showSidebar} />
+									<NoContent />
+								</Route>
+								<Route path='/todo/nocontent'>
+									<Sidebar category='todo' show={showSidebar} />
+									<NoContent />
+								</Route>
+								<Route path='/todo/:contentId'>
+									<Sidebar category='todo' show={showSidebar} />
+								</Route>
+							</Switch>
+						</MainBody>
+					</Route>
 
-					{/* <Route><NoPage redirectTo={!category ? 'note' : 'todo'} /></Route> */}
+					{/*-------------- NoPage ----------------*/}		
+					<Route>
+						<NoPage redirectTo={!category ? 'note' : 'todo'} />
+					</Route>
 				</Switch>
+
 			</Container>
 		</StyledApp>
 	);
 };
 
 /*-------------- style for App ----------------*/
-
 const StyledApp = ({ theme, children }) => {
 	return (
 		<div

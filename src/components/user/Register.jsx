@@ -5,9 +5,10 @@ import styled from '@emotion/styled';
 import { useHistory } from 'react-router-dom';
 
 import useThemeModel from '../../models/useThemeModel';
+import { userRegisterRequest, isUserExist } from '../../utils/requests';
 
 const Register = () => {
-	const initState = {
+	const initValue = {
 		username: '',
 		password: '',
 		passwordConfirm: '',
@@ -17,22 +18,30 @@ const Register = () => {
 	};
 	const history = useHistory();
 	const { theme } = useThemeModel();
-	const [state, setState] = useState(initState);
+	const [value, setValue] = useState(initValue);
 
 	const onChange = e => {
-		setState({ [e.target.name]: e.target.value });
+		setValue({ ...value, [e.target.name]: e.target.value });
 	};
 
 	const onSubmit = e => {
 		e.preventDefault();
-		// redux写法，待修改
-		// this.props.registerAction.userRegisterRequest(state).then(
-		// 	() => {
-		// 		// 显示注册成功信息
-		// 		history.push('/login'); //跳转到登录
-		// 	},
-		// 	({ response }) => setState({ errors: response.data, isLoading: false })
-		// );
+		setValue({
+			...value,
+			isLoading: true
+		});
+		userRegisterRequest(value).then(
+			() => {
+				// 显示注册成功信息
+				alert('注册成功！');
+				history.push('/login'); //跳转到登录
+			},
+			({ response }) => {
+				setValue({ ...value, errors: response.data });
+				// console.log(response.data);
+				// console.log(value);
+			}
+		);
 	};
 
 	const checkUserExist = e => {
@@ -40,22 +49,21 @@ const Register = () => {
 		const val = e.target.value;
 		let invalid;
 		if (val !== '') {
-			// redux写法，待修改
-			// this.props.registerAction.isUserExist(val).then(response => {
-			// 	let errors = state.errors;
-			// 	if (response.data[0]) {
-			// 		errors[field] = '用户名已存在：' + val;
-			// 		invalid = true;
-			// 	} else {
-			// 		errors[field] = '';
-			// 		invalid = false;
-			// 	}
-			// 	setState({ errors, invalid });
-			// });
+			isUserExist(val).then(response => {
+				let errors = value.errors;
+				if (response.data[0]) {
+					errors[field] = '用户名已存在：' + val;
+					invalid = true;
+				} else {
+					errors[field] = '';
+					invalid = false;
+				}
+				setValue({ ...value, errors, invalid });
+			});
 		}
 	};
 
-	const { errors, isLoading, invalid } = state;
+	const { errors, isLoading, invalid } = value;
 	return (
 		<form
 			onSubmit={onSubmit}
@@ -71,51 +79,48 @@ const Register = () => {
 			<FormTitle theme={theme}>注册新用户</FormTitle>
 			<div>
 				<FormLabel theme={theme}>用户名：</FormLabel>
-				<br />
 				<FormInput
 					theme={theme}
 					type='text'
 					name='username'
-					value={state.username}
+					value={value.username}
 					onChange={onChange}
 					onBlur={checkUserExist}
-					// className={errors.username ? 'invalid' : ''}  //验证失败时的样式
+					className={errors.username ? 'invalid' : ''} //验证失败时的样式
 				/>
-				{/* {errors.username && (
-					<span className='erros-text'>{errors.username}</span> //显示错误信息
-				)} */}
+				{errors.username && (
+					<ErrorText>{errors.username}</ErrorText> //显示错误信息
+				)}
 			</div>
 			<br />
 			<div>
 				<FormLabel theme={theme}>密码：</FormLabel>
-				<br />
 				<FormInput
 					theme={theme}
 					type='password'
 					name='password'
-					value={state.password}
+					value={value.password}
 					onChange={onChange}
-					// className={errors.password ? 'invalid' : ''}  //验证失败时的样式
+					className={errors.password ? 'invalid' : ''} //验证失败时的样式
 				/>
-				{/* {errors.password && (
-					<span className='erros-text'>{errors.password}</span> //显示错误信息
-				)} */}
+				{errors.password && (
+					<ErrorText>{errors.password}</ErrorText> //显示错误信息
+				)}
 			</div>
 			<br />
 			<div>
 				<FormLabel theme={theme}>确认密码：</FormLabel>
-				<br />
 				<FormInput
 					theme={theme}
 					type='password'
 					name='passwordConfirm'
-					value={state.passwordConfirm}
+					value={value.passwordConfirm}
 					onChange={onChange}
-					// className={errors.passwordConfirm ? 'invalid' : ''} //验证失败时的样式
+					className={errors.passwordConfirm ? 'invalid' : ''} //验证失败时的样式
 				/>
-				{/* {errors.passwordConfirm && (
-					<span className='erros-text'>{errors.passwordConfirm}</span>  //显示错误信息
-				)} */}
+				{errors.passwordConfirm && (
+					<ErrorText>{errors.passwordConfirm}</ErrorText> //显示错误信息
+				)}
 			</div>
 			<br />
 			<FormBtn disabled={isLoading || invalid} theme={theme}>
@@ -129,29 +134,38 @@ export const FormTitle = styled.h1`
 `;
 export const FormLabel = styled.label`
 	color: ${({ theme }) => theme.color.caption};
-	font-size: 0.85rem;
+	font-size: 0.95rem;
+	font-weight: bold;
+	display: block;
 `;
 export const FormInput = styled.input`
+display: block;
 	padding: 0.275rem 0.55rem;
 	font-size: 1rem;
 	color: ${({ theme }) => theme.color.body};
 	background-color: #fff;
-	border: 1px solid #ced4da;
-	border-radius: 0.25rem;
+	border: none;
+	border-bottom: 1px solid #9e9e9e;
+	outline: none;
 	&.invalid {
-		border: 1px solid red;
+		border: none;
+		border-bottom: 1px solid tomato;
 	}
 `;
-
 export const FormBtn = styled.button`
 	padding: 0.25rem 1rem;
 	font-size: 1.25rem;
 	line-height: 1.5;
 	border-radius: 0.3rem;
 	color: ${({ theme }) => theme.button.background};
-  cursor: pointer;
-	&:hover{
-		filter:brightness(.97);
+	cursor: pointer;
+	&:hover {
+		filter: brightness(0.97);
 	}
+`;
+export const ErrorText = styled.span`
+	display: block;
+	font-size: 12px;
+	color: tomato;
 `;
 export default Register;

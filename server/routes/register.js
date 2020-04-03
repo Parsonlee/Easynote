@@ -8,9 +8,6 @@ const validateInput = data => {
 	if (validator.isEmpty(data.username)) {
 		errors.username = '请填写用户名';
 	}
-	if (!validator.isEmail(data.email)) {
-		errors.email = '请填写邮箱';
-	}
 	if (validator.isEmpty(data.password)) {
 		errors.password = '请填写密码';
 	}
@@ -50,10 +47,10 @@ router.post('/users', async ctx => {
 
 // 验证用户名是否已存在
 router.get('/users/:username', async ctx => {
-	const sql = 'select * from users where `username`=?';
+	const sql = 'select * from user where `username`=?';
 	const arr = [ctx.params.username];
-	ctx.body = 'success';
 	const results = await sqlFn(sql, arr);
+
 	if (results) {
 		ctx.body = results;
 	} else {

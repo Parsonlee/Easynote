@@ -15,16 +15,18 @@ import NoPage from './components/noFound/NoPage';
 import NoContent from './components/noFound/NoContent';
 import User from './components/header/User';
 import Register from './components/user/Register';
+import Login from './components/user/Login';
+import UserInfo from './components/user/UserInfo';
 
 import RichTextDemo from './components/content/noteEditor/RichTextDemo';
 
 import useThemeModel from './models/useThemeModel';
-import Login from './components/user/Login';
 
 /*-------------- App ----------------*/
 const App = () => {
 	const { theme } = useThemeModel();
 	const history = useHistory();
+
 	// 侧栏
 	const [showSidebar, setShowSidebar] = useState(true);
 
@@ -54,6 +56,7 @@ const App = () => {
 				<Switch>
 					<Route exact path='/register' />
 					<Route exact path='/login' />
+					<Route exact path='/userInfo' />
 
 					<Route>
 						<Header>
@@ -81,11 +84,10 @@ const App = () => {
 				{/*-------------- Container ----------------*/}
 				<Switch>
 
-					{/*-------------- Login ----------------*/}
+					{/*-------------- 渲染用户组件 ----------------*/}
 					<Route path='/login' component={Login} />
-
-					{/*-------------- Register ----------------*/}
 					<Route path='/register' component={Register} />
+					<Route path='/userInfo' component={UserInfo} />
 					
 					{/* ----------------note---------------- */}
 					<Route path='/note'>

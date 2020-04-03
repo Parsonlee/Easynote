@@ -5,44 +5,56 @@ import { useHistory } from 'react-router-dom';
 
 import { validateInput } from '../../utils/loginValidate';
 import useThemeModel from '../../models/useThemeModel';
-import { FormTitle, FormLabel, FormInput, FormBtn } from './Register';
+import {
+	FormTitle,
+	FormLabel,
+	FormInput,
+	FormBtn,
+	ErrorText
+} from './Register';
+import { login } from '../../utils/requests';
 
 const Login = () => {
-	const initState = {
+	const initValue = {
 		username: '',
 		password: '',
 		errors: {},
 		isLoading: false
 	};
 	const { theme } = useThemeModel();
-	const [state, setState] = useState(initState);
+	const [value, setValue] = useState(initValue);
 	const history = useHistory();
 
 	const onChange = e => {
-		setState({ [e.target.name]: e.target.value });
+		setValue({ ...value, [e.target.name]: e.target.value });
 	};
 
 	const isValid = e => {
-		const { errors, isValid } = validateInput(state);
+		const { errors, isValid } = validateInput(value);
 		if (!isValid) {
-			setState({ errors });
+			setValue({ ...value, errors });
 		}
 		return isValid;
 	};
 
 	const onSubmit = e => {
 		e.preventDefault();
+		setValue({
+			...value,
+			isLoading: true
+		});
 		if (isValid()) {
-			setState({ errors: {}, isLoading: true });
+			setValue({ ...value, errors: {}, isLoading: true });
 			// 登录成功，跳转路由
-			this.props.login(state).then(
+			login(value).then(
 				res => history.push('/note'),
-				({ res }) => setState({ errors: res.data, isLoading: false })
+				({ response }) =>
+					setValue({ ...value, errors: response.data, isLoading: false })
 			);
 		}
 	};
 
-	const { errors, username, password, isLoading } = state;
+	const { errors, isLoading } = value;
 	return (
 		<form
 			onSubmit={onSubmit}
@@ -56,39 +68,37 @@ const Login = () => {
 			`}
 		>
 			<FormTitle theme={theme}>用户登录</FormTitle>
-			{/* {typeof errors == 'string' && (
-				<div className='alert-danger'>{errors}</div> //错误信息
-			)} */}
+			{typeof errors == 'string' && (
+				<ErrorText>{errors}</ErrorText> //错误信息
+			)}
 			<div>
 				<FormLabel theme={theme}>用户名</FormLabel>
-				<br />
 				<FormInput
 					theme={theme}
 					type='text'
-					name='text'
-					value={username}
+					name='username'
+					value={value.username}
 					onChange={onChange}
-					// className={errors.username ? 'error' : ''}
+					className={errors.username ? 'invalid' : ''} //验证失败时的样式
 				/>
-				{/* {errors.username && (
-					<span className='erros-text'>{errors.username}</span> //显示错误信息
-				)} */}
+				{errors.username && (
+					<ErrorText>{errors.username}</ErrorText> //显示错误信息
+				)}
 			</div>
 			<br />
 			<div>
 				<FormLabel theme={theme}>密码</FormLabel>
-				<br />
 				<FormInput
 					theme={theme}
 					type='password'
 					name='password'
-					value={password}
+					value={value.password}
 					onChange={onChange}
-					// className={errors.password ? 'error' : ''}
+					className={errors.username ? 'invalid' : ''} //验证失败时的样式
 				/>
-				{/* {errors.password && (
-					<span className='erros-text'>{errors.username}</span> //显示错误信息
-				)} */}
+				{errors.password && (
+					<ErrorText>{errors.password}</ErrorText> //显示错误信息
+				)}
 			</div>
 			<br />
 			<FormBtn theme={theme} disabled={isLoading}>

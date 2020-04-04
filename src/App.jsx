@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState, memo, useEffect } from 'react';
 /** @jsx jsx */
 import { jsx, css, Global } from '@emotion/core';
 import { normalize } from 'polished';
@@ -21,18 +21,25 @@ import UserInfo from './components/user/UserInfo';
 import RichTextDemo from './components/content/noteEditor/RichTextDemo';
 
 import useThemeModel from './models/useThemeModel';
+import useAuthModel from './models/useAuthModel';
+import requireAuth from './utils/requireAuth';
 
 /*-------------- App ----------------*/
 const App = () => {
 	const { theme } = useThemeModel();
+	const { auth, setAuthStatus } = useAuthModel();
 	const history = useHistory();
+	// 检查是否登录
+	useEffect(() => {
+		setAuthStatus();
+	});
 
 	// 侧栏
 	const [showSidebar, setShowSidebar] = useState(true);
 
 	// app category切换
 	const [category, setCategory] = useState(0);
-	const handleCategorySwitch = index => {
+	const handleCategorySwitch = (index) => {
 		history.push(`/${!index ? 'note' : 'todo'}`);
 		setCategory(index);
 	};
@@ -44,7 +51,11 @@ const App = () => {
 
 	// 用户视图
 	const handleClickUser = () => {
-		history.push('/register');
+		if (auth) {
+			history.push('/userInfo');
+		} else {
+			history.push('/login');
+		}
 	};
 
 	return (
@@ -72,7 +83,7 @@ const App = () => {
 							<CreateBtn onTap={handleTapCreate}>+ 写文章</CreateBtn>
 							<User onClick={handleClickUser}>
 								<img
-									src='https://business.bing.com/api/v3/search/person/photo?id=e502bfaa-c47b-4a19-9b60-77d01b1a3bae'
+									src='http://pic.616pic.com/ys_img/00/27/13/RnzmVtJi6T.jpg'
 									alt='wtf'
 								/>
 							</User>
@@ -80,15 +91,13 @@ const App = () => {
 					</Route>
 				</Switch>
 
-
 				{/*-------------- Container ----------------*/}
 				<Switch>
-
 					{/*-------------- 渲染用户组件 ----------------*/}
-					<Route path='/login' component={Login} />
 					<Route path='/register' component={Register} />
-					<Route path='/userInfo' component={UserInfo} />
-					
+					<Route path='/login' component={Login} />
+					<Route path='/userInfo' component={requireAuth(UserInfo)} />
+
 					{/* ----------------note---------------- */}
 					<Route path='/note'>
 						<MainBody>
@@ -128,12 +137,11 @@ const App = () => {
 						</MainBody>
 					</Route>
 
-					{/*-------------- NoPage ----------------*/}		
+					{/*-------------- NoPage ----------------*/}
 					<Route>
 						<NoPage redirectTo={!category ? 'note' : 'todo'} />
 					</Route>
 				</Switch>
-
 			</Container>
 		</StyledApp>
 	);

@@ -1,35 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useHistory } from 'react-router-dom';
 
+import { FormTitle,FormLabel,FormInput,FormBtn,ErrorText } from './Register';
 import { validateInput } from '../../utils/loginValidate';
-import useThemeModel from '../../models/useThemeModel';
-import {
-	FormTitle,
-	FormLabel,
-	FormInput,
-	FormBtn,
-	ErrorText
-} from './Register';
 import { login } from '../../utils/requests';
+import useThemeModel from '../../models/useThemeModel';
+import useAuthModel from '../../models/useAuthModel';
 
 const Login = () => {
 	const initValue = {
 		username: '',
 		password: '',
 		errors: {},
-		isLoading: false
+		isLoading: false,
 	};
-	const { theme } = useThemeModel();
-	const [value, setValue] = useState(initValue);
 	const history = useHistory();
+	const { theme } = useThemeModel();
+	const { auth, setAuthStatus } = useAuthModel();
+	const [value, setValue] = useState(initValue);
+	useEffect(() => {
+		if (auth) {
+			history.push('/userInfo');
+		}
+	});
 
-	const onChange = e => {
+	const onChange = (e) => {
 		setValue({ ...value, [e.target.name]: e.target.value });
 	};
 
-	const isValid = e => {
+	const isValid = (e) => {
 		const { errors, isValid } = validateInput(value);
 		if (!isValid) {
 			setValue({ ...value, errors });
@@ -37,17 +38,20 @@ const Login = () => {
 		return isValid;
 	};
 
-	const onSubmit = e => {
+	const onSubmit = (e) => {
 		e.preventDefault();
 		setValue({
 			...value,
-			isLoading: true
+			isLoading: true,
 		});
 		if (isValid()) {
 			setValue({ ...value, errors: {}, isLoading: true });
 			// 登录成功，跳转路由
 			login(value).then(
-				res => history.push('/note'),
+				() => {
+					history.push('/note');
+					setAuthStatus();
+				},
 				({ response }) =>
 					setValue({ ...value, errors: response.data, isLoading: false })
 			);

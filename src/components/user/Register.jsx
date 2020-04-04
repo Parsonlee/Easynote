@@ -159,6 +159,8 @@ export const FormBtn = styled.button`
 	border-radius: 0.3rem;
 	color: ${({ theme }) => theme.button.background};
 	cursor: pointer;
+	border: 1px solid;
+	background: white;
 	&:hover {
 		filter: brightness(0.97);
 	}

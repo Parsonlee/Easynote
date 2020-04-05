@@ -31,3 +31,8 @@ export const logOut = () => {
 export const checkUserInfo = (userId) => {
 	return axios.post('http://localhost:3100/api/userInfo', userId);
 };
+
+// 修改用户头像
+export const updataAvatar = (userData)=>{
+	return axios.post('http://localhost:3100/api/userAvatar', userData);
+}

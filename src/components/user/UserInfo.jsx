@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useHistory } from 'react-router-dom';
+import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import jwtDecode from 'jwt-decode';
 
-import { FormInput, FormBtn, FormLabel } from './Register';
-import { logOut, checkUserInfo } from '../../utils/requests';
+import { FormInput, FormBtn, FormLabel, BackBtn } from './Register';
+import { logOut, checkUserInfo, updataAvatar } from '../../utils/requests';
 import useThemeModel from '../../models/useThemeModel';
 import useAuthModel from '../../models/useAuthModel';
 
@@ -15,25 +17,28 @@ const UserInfo = () => {
 		username: '',
 		password: '',
 		email: '',
-		phone: ''
+		phone: '',
 	};
-	const { auth, setAuthStatus } = useAuthModel();
+	const { theme } = useThemeModel();
+	const { setAuthStatus } = useAuthModel();
 	const [info, setInfo] = useState(initInfo);
 	const history = useHistory();
-	const { theme } = useThemeModel();
+
+	const { id } = jwtDecode(localStorage.jwtToken);
+	const userId = { id: id };
+
+	// 获取用户信息
 	useEffect(() => {
-		const { id } = jwtDecode(localStorage.jwtToken);
-		const userId = { id: id };
 		checkUserInfo(userId).then((response) => {
-			console.log(response.data);
 			setInfo({
 				avatar: response.data[0].avatar,
 				username: response.data[0].username,
 				password: response.data[0].password,
 				email: response.data[0].email,
-				phone: response.data[0].phone
+				phone: response.data[0].phone,
 			});
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const logout = () => {
@@ -41,24 +46,96 @@ const UserInfo = () => {
 		setAuthStatus();
 		history.push('/');
 	};
+
+	const backToIndex = () => {
+		history.push('/');
+	};
+
+	const changeAvatar = () => {
+		const input = document.querySelector('input[type=file]');
+		console.log(input);
+		const userAvatar = input.files[0];
+		const fileReader = new FileReader();
+		fileReader.readAsDataURL(userAvatar);
+		fileReader.onload = () => {
+			updataAvatar({ id, avatar: fileReader.result });
+			console.log({ id, avatar: fileReader.result });
+			setInfo({ ...info, avatar: fileReader.result });
+		};
+	};
+
 	return (
-		<div css={css`
-			width: 100%;
-			height: 100%;
-			margin-top: 85px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		`}>
-			<button css={css`outline: none;border:none;`}>{auth ? '😁' : '😢'}</button>
-			<img
-				src={info.avatar}
-				alt='avatar'
+		<div
+			css={css`
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				position: relative;
+			`}
+		>
+			<BackBtn onClick={backToIndex}>
+				<FontAwesomeIcon icon={faChevronCircleLeft} color='gray' />
+			</BackBtn>
+			<div
+				className='avatar'
+				data-text='上传头像'
 				css={css`
 					width: 80px;
 					height: 80px;
+					margin-bottom: 10px;
+					margin-top: 85px;
+					border-radius: 50%;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					overflow: hidden;
+					position: relative;
+					&::before {
+						position: absolute;
+						left: 0;
+						top: 0;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						width: 100%;
+						height: 100%;
+						background-color: rgba(0, 0, 0, 0.3);
+						content: attr(data-text);
+						transform: translateY(-100%);
+						color: whitesmoke;
+						font-size: 0.8rem;
+					}
+					&:hover::before {
+						transform: translateY(0);
+					}
+					.img {
+						width: 100%;
+						height: auto;
+					}
 				`}
-			/>
+			>
+				<input
+					onChange={changeAvatar}
+					type='file'
+					accept='image/*'
+					css={css`
+						position: absolute;
+						cursor: pointer;
+						top: 0;
+						bottom: 0;
+						left: 0;
+						right: 0;
+						opacity: 0;
+						width: 3.5rem;
+						clear: both;
+						display: block;
+						margin: auto;
+					`}
+				/>
+				<img src={info.avatar} alt='avatar' className='img' />
+			</div>
 			<FormLabel theme={theme}>用户名</FormLabel>
 			<FormInput
 				type='text'
@@ -67,7 +144,7 @@ const UserInfo = () => {
 				name='username'
 				readOnly
 			/>
-			<br/>
+			<br />
 			<FormLabel theme={theme}>密码</FormLabel>
 			<FormInput
 				type='text'
@@ -75,8 +152,8 @@ const UserInfo = () => {
 				value={info.password}
 				name='password'
 				readOnly
-				/>
-			<br/>
+			/>
+			<br />
 			<FormLabel theme={theme}>邮箱</FormLabel>
 			<FormInput
 				type='text'
@@ -85,7 +162,7 @@ const UserInfo = () => {
 				name='email'
 				readOnly
 			/>
-			<br/>
+			<br />
 			<FormLabel theme={theme}>电话</FormLabel>
 			<FormInput
 				type='text'
@@ -94,7 +171,7 @@ const UserInfo = () => {
 				name='phone'
 				readOnly
 			/>
-			<br/>
+			<br />
 			<FormBtn onClick={logout} theme={theme}>
 				退出登录
 			</FormBtn>

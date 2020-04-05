@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { FormTitle,FormLabel,FormInput,FormBtn,ErrorText } from './Register';
+import { FormTitle,FormLabel,FormInput,FormBtn,ErrorText,BackBtn } from './Register';
 import { validateInput } from '../../utils/loginValidate';
 import { login } from '../../utils/requests';
 import useThemeModel from '../../models/useThemeModel';
@@ -58,6 +60,14 @@ const Login = () => {
 		}
 	};
 
+	const backToIndex = ()=>{
+		history.push('/');
+	}
+
+	const toRegister = ()=>{
+		history.push('/register');
+	}
+
 	const { errors, isLoading } = value;
 	return (
 		<form
@@ -65,12 +75,15 @@ const Login = () => {
 			css={css`
 				width: 100%;
 				height: 100%;
-				margin-top: 85px;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
+				position: relative;
 			`}
 		>
+			<BackBtn onClick={backToIndex}>
+				<FontAwesomeIcon icon={faChevronCircleLeft} color='gray' />
+			</BackBtn>
 			<FormTitle theme={theme}>用户登录</FormTitle>
 			{typeof errors == 'string' && (
 				<ErrorText>{errors}</ErrorText> //错误信息
@@ -108,6 +121,14 @@ const Login = () => {
 			<FormBtn theme={theme} disabled={isLoading}>
 				登录
 			</FormBtn>
+			<button onClick={toRegister} css={css`
+				text-decoration: underline;
+				font-size: 0.85rem;
+				margin-top: 15px;
+				color: #9e9e9e;
+				border: none;
+				cursor: pointer;
+			`}>还没有账号？请点这里</button>
 		</form>
 	);
 };

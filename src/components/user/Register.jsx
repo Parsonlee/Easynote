@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
 import useThemeModel from '../../models/useThemeModel';
 import { userRegisterRequest, isUserExist } from '../../utils/requests';
@@ -14,21 +16,21 @@ const Register = () => {
 		passwordConfirm: '',
 		errors: {},
 		isLoading: false,
-		invalid: false
+		invalid: false,
 	};
 	const history = useHistory();
 	const { theme } = useThemeModel();
 	const [value, setValue] = useState(initValue);
 
-	const onChange = e => {
+	const onChange = (e) => {
 		setValue({ ...value, [e.target.name]: e.target.value });
 	};
 
-	const onSubmit = e => {
+	const onSubmit = (e) => {
 		e.preventDefault();
 		setValue({
 			...value,
-			isLoading: true
+			isLoading: true,
 		});
 		userRegisterRequest(value).then(
 			() => {
@@ -44,12 +46,12 @@ const Register = () => {
 		);
 	};
 
-	const checkUserExist = e => {
+	const checkUserExist = (e) => {
 		const field = e.target.name;
 		const val = e.target.value;
 		let invalid;
 		if (val !== '') {
-			isUserExist(val).then(response => {
+			isUserExist(val).then((response) => {
 				let errors = value.errors;
 				if (response.data[0]) {
 					errors[field] = '用户名已存在：' + val;
@@ -63,6 +65,10 @@ const Register = () => {
 		}
 	};
 
+	const backToIndex = ()=>{
+		history.push('/');
+	}
+
 	const { errors, isLoading, invalid } = value;
 	return (
 		<form
@@ -70,12 +76,15 @@ const Register = () => {
 			css={css`
 				width: 100%;
 				height: 100%;
-				margin-top: 85px;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
+				position: relative;
 			`}
 		>
+			<BackBtn onClick={backToIndex}>
+				<FontAwesomeIcon icon={faChevronCircleLeft} color='gray' />
+			</BackBtn>
 			<FormTitle theme={theme}>注册新用户</FormTitle>
 			<div>
 				<FormLabel theme={theme}>用户名：</FormLabel>
@@ -129,8 +138,10 @@ const Register = () => {
 		</form>
 	);
 };
+
 export const FormTitle = styled.h1`
 	color: ${({ theme }) => theme.primary.base};
+	margin-top: 105px;
 `;
 export const FormLabel = styled.label`
 	color: ${({ theme }) => theme.color.caption};
@@ -139,7 +150,7 @@ export const FormLabel = styled.label`
 	display: block;
 `;
 export const FormInput = styled.input`
-display: block;
+	display: block;
 	padding: 0.275rem 0.55rem;
 	font-size: 1rem;
 	color: ${({ theme }) => theme.color.body};
@@ -169,5 +180,22 @@ export const ErrorText = styled.span`
 	display: block;
 	font-size: 12px;
 	color: tomato;
+`;
+export const BackBtn = styled.button`
+	position: absolute;
+	top: 40px;
+	width: 40px;
+	height: 40px;
+	left: 50px;
+	outline: none;
+	border: none;
+	background: whitesmoke;
+	border-radius: 50%;
+	font-size: 1.3rem;
+	cursor: pointer;
+	padding: 0;
+	&:hover {
+		filter: brightness(0.97);
+	}
 `;
 export default Register;

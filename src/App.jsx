@@ -81,12 +81,7 @@ const App = () => {
 								onSwitch={handleCategorySwitch}
 							/>
 							<CreateBtn onTap={handleTapCreate}>+ 写文章</CreateBtn>
-							<User onClick={handleClickUser}>
-								<img
-									src='http://pic.616pic.com/ys_img/00/27/13/RnzmVtJi6T.jpg'
-									alt='wtf'
-								/>
-							</User>
+							<User onClick={handleClickUser} />
 						</Header>
 					</Route>
 				</Switch>

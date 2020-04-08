@@ -8,7 +8,8 @@ const NoContent = ()=>{
 
   return (
     <div css={css`
-      font-size: 4rem;
+      padding: 0 50px;
+      font-size: 3.6rem;
       flex: 1;
       display: flex;
       justify-content: center;

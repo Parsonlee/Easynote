@@ -1,7 +1,5 @@
 import { createModel } from 'hox';
 import { useState } from 'react';
-import useAuthModel from './useAuthModel';
-import { useEffect } from 'react';
 
 const initData = [
 	{
@@ -77,15 +75,7 @@ const initData = [
 ];
 
 function useData() {
-	const { auth } = useAuthModel();
 	const [data, setData] = useState(initData);
-
-	// useEffect(() => {
-	// 	if (auth) {
-	// 		setData();
-	// 	}
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [auth]);
 
 	const deleteByContentId = (contentId) => {
 		setData(data.filter((item) => item.contentId !== contentId));

@@ -14,6 +14,8 @@ const Register = () => {
 		username: '',
 		password: '',
 		passwordConfirm: '',
+		email: '',
+		phone: '',
 		errors: {},
 		isLoading: false,
 		invalid: false,
@@ -99,6 +101,36 @@ const Register = () => {
 				/>
 				{errors.username && (
 					<ErrorText>{errors.username}</ErrorText> //显示错误信息
+				)}
+			</div>
+			<br />
+			<div>
+				<FormLabel theme={theme}>邮箱：</FormLabel>
+				<FormInput
+					theme={theme}
+					type='text'
+					name='email'
+					value={value.email}
+					onChange={onChange}
+					className={errors.email ? 'invalid' : ''} //验证失败时的样式
+				/>
+				{errors.email && (
+					<ErrorText>{errors.email}</ErrorText> //显示错误信息
+				)}
+			</div>
+			<br />
+			<div>
+				<FormLabel theme={theme}>电话：</FormLabel>
+				<FormInput
+					theme={theme}
+					type='text'
+					name='phone'
+					value={value.phone}
+					onChange={onChange}
+					className={errors.phone ? 'invalid' : ''} //验证失败时的样式
+				/>
+				{errors.phone && (
+					<ErrorText>{errors.phone}</ErrorText> //显示错误信息
 				)}
 			</div>
 			<br />

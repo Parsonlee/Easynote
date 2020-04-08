@@ -2,7 +2,7 @@ import { createModel } from 'hox';
 import { useState } from 'react';
 
 function useZoom() {
-	const [zoom, setZoom] = useState(false);
+	const [zoom, setZoom] = useState(window.screen.width < 576 ? true : false);
 
 	const toggleZoom = () => {
 		setZoom(!zoom);
@@ -10,7 +10,7 @@ function useZoom() {
 
 	return {
 		zoom,
-		toggleZoom
+		toggleZoom,
 	};
 }
 

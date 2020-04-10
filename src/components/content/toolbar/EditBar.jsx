@@ -1,15 +1,24 @@
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMouse } from '@fortawesome/free-solid-svg-icons';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
 import useThemeModel from '../../../models/useThemeModel';
-// import useEditbarModel from '../../../models/useEditbarModel';
 
-const EditBar = ({ children,showEditBar }) => {
+const EditBar = ({ children, showEditBar }) => {
 	const { theme } = useThemeModel();
-	// const { editList, selectEdit } = useEditbarModel();
+	const [ifDrag, setIfDrag] = useState(false);
+
+	const toggleDragable = () => {
+		setIfDrag(!ifDrag);
+	};
 
 	return (
-		<div
+		<motion.div
+			drag={ifDrag}
+			dragMomentum={false}
 			css={css`
 				display: ${showEditBar ? 'block' : 'none'};
 				position: absolute;
@@ -22,6 +31,7 @@ const EditBar = ({ children,showEditBar }) => {
 				border-radius: 10px;
 				padding: 13px;
 				padding-left: 20px;
+				z-index: 999;
 				.heading-one {
 					font-size: 2em;
 					font-weight: bold;
@@ -46,35 +56,20 @@ const EditBar = ({ children,showEditBar }) => {
 				}
 			`}
 		>
-			{/* {editList.map((item) => (
-				<div
-					key={item.behave}
-					className={item.behave}
-					css={css`
-						position: relative;
-						cursor: pointer;
-						opacity: ${item.active ? 1 : 0.5};
-						margin: 3px 0;
-					`}
-					onClick={() => selectEdit(item.behave)}
-				>
-					<div
-						css={css`
-							position: absolute;
-							top: 50%;
-							left: -10px;
-							transform: translateY(-50%);
-							padding: 3px;
-							background: ${theme.primary.base};
-							border-radius: 50%;
-							display: ${item.active ? 'block' : 'none'};
-						`}
-					></div>
-					{item.content}
-				</div>
-			))} */}
+			<FontAwesomeIcon
+				css={css`
+					display: block;
+					margin-left: auto;
+					margin-bottom: 4px;
+					cursor: pointer;
+				`}
+				color={ifDrag ? theme.color.body : theme.color.hint}
+				size='xs'
+				icon={faMouse}
+				onClick={toggleDragable}
+			/>
 			{children}
-		</div>
+		</motion.div>
 	);
 };
 

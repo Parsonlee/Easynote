@@ -2,7 +2,6 @@ import React from 'react'
 import { faFont,faCompress,faExpand } from '@fortawesome/free-solid-svg-icons';
 
 import ToolButton from './ToolButton';
-
 import useZoomModel from '../../../models/useZoomModel';
 
 const ToolBar = ({ toggleEditBar, ...props }) => {

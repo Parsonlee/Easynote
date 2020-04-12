@@ -22,7 +22,7 @@ export const login = (data) => {
 
 // 退出登录
 export const logOut = () => {
-	localStorage.removeItem('jwtToken');
+	localStorage.clear();
 	//取消请求头中的信息
 	setAuthToken(false);
 };
@@ -33,6 +33,16 @@ export const checkUserInfo = (userId) => {
 };
 
 // 修改用户头像
-export const updataAvatar = (userData)=>{
+export const updataAvatar = (userData) => {
 	return axios.post('http://localhost:3100/api/userAvatar', userData);
-}
+};
+
+// 查询用户笔记
+export const getNoteData = (userId) => {
+	return axios.post('http://localhost:3100/api/note', userId);
+};
+
+// 新增用户笔记
+export const newNote = (data) => {
+	return axios.post('http://localhost:3100/api/newnote', data);
+};

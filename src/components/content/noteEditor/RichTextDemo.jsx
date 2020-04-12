@@ -8,13 +8,13 @@ import { useParams } from 'react-router-dom';
 
 import ToolBar from '../toolbar/ToolBar';
 import EditBar from '../toolbar/EditBar';
+// import useDataModel from '../../../models/useDataModel';
 
 const RichTextDemo = () => {
 	const params = useParams();
+	// const { data,setData } = useDataModel();
 	const [showEditBar, setShowEditBar] = useState(false);
-	const [value, setValue] = useState(
-		JSON.parse(localStorage.getItem(`${params.contentId}`)) || initialValue
-	);
+	const [value, setValue] = useState(initialValue);
 
 	useEffect(() => {
 		setValue(
@@ -32,7 +32,7 @@ const RichTextDemo = () => {
 	const notLostFocus = (e) => {
 		e && e.preventDefault();
 	};
-
+	
 	return (
 		<EditField>
 			<Slate

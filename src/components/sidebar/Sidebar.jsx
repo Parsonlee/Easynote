@@ -1,7 +1,6 @@
 import { memo } from 'react';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { between } from 'polished';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -19,16 +18,16 @@ const Sidebar = ({ show, category }) => {
 	// 动画
 	const variants = {
 		show: {
+			width: '168px',
 			x: '0',
-			width: between('80px', '168px'),
 			transition: {
 				ease: 'easeOut',
-				duration: 0.2
+				duration: 0.3
 			}
 		},
 		hide: {
 			width: 0,
-			x: '-30px',
+			x: '0',
 			transition: {
 				ease: 'circOut',
 				duration: 0.4
@@ -50,7 +49,6 @@ const Sidebar = ({ show, category }) => {
 		<motion.div
 			css={css`
 				height: 100%;
-				width: ${between('150px', '240px')};
 				z-index: 1;
 				background: ${theme.background.backdrop};
 				overflow-y: auto;
@@ -76,9 +74,8 @@ const Sidebar = ({ show, category }) => {
 							<SidebarItem
 								key={item.contentId}
 								title={item.title}
-								desription={item.content.description}
-								date={item.createdTime}
-								timeBefore='3小时前'
+								desription={item.description}
+								updateTime={item.updateTime}
 								active={item.contentId === params.contentId}
 								onTap={() => history.push(`/${category}/${item.contentId}`)}
 								onClickDelBtn={() => handleClickDelBtn(item.contentId, i)}

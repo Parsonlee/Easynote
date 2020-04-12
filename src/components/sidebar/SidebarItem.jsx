@@ -12,9 +12,8 @@ const SideListItem = ({
 	// 数据
 	title,
 	desription,
-	date,
 	updateTime,
-	// 数据
+	//
 	active,
 	onTap,
 	onClickDelBtn
@@ -101,8 +100,7 @@ const SideListItem = ({
 					justify-content: space-between;
 					white-space: nowrap;
 				}
-				.time-date,
-				.time-before {
+				.time-date{
 					font-size: 12px;
 					color: ${theme.color.hint};
 					white-space: nowrap;
@@ -112,8 +110,7 @@ const SideListItem = ({
 			<h4>{title}</h4>
 			<p>{desription}</p>
 			<div className='time'>
-				<span className='time-date'>{date}</span>
-				<span className='time-before'>{updateTime}</span>
+				<span className='time-date'>{updateTime}</span>
 			</div>
 			<SidebarDelBtn
 				css={css`

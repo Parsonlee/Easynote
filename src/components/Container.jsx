@@ -17,6 +17,7 @@ const Container = ({ children }) => {
 			css={css`
 				width: ${zoom ? '100%' : between('300px', '900px')};
 				height: ${zoom ? '100%' : between('80vh', '80vh')};
+				min-height: 630px;
 				border-radius: ${zoom ? 0 : '15px'};
 				transition: 0.4s;
 				background: ${theme.background.base};

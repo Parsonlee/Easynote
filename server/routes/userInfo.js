@@ -1,10 +1,6 @@
 const router = require('koa-router')();
 const sqlFn = require('../mysql');
 
-router.get('/userInfo', async (ctx) => {
-	ctx.body = new Date();
-});
-
 // 查看用户信息
 router.post('/userInfo', async (ctx) => {
 	const { id } = ctx.request.body;

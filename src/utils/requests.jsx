@@ -42,7 +42,17 @@ export const getNoteData = (userId) => {
 	return axios.post('http://localhost:3100/api/note', userId);
 };
 
-// 新增用户笔记
+// 新增笔记
 export const newNote = (data) => {
 	return axios.post('http://localhost:3100/api/newnote', data);
+};
+
+// 修改笔记
+export const updateNote = (data) => {
+	return axios.post('http://localhost:3100/api/updatenote', data);
+};
+
+// 删除笔记
+export const deleteNote = (data) => {
+	return axios.post('http://localhost:3100/api/deletenote', data);
 };

@@ -19,8 +19,8 @@ const User = ({ onClick }) => {
 	// 获取当前用户头像
 	useEffect(() => {
 		if (auth) {
-			const { id } = jwtDecode(localStorage.jwtToken);
-			const userId = { id: id };
+			const { userid } = jwtDecode(localStorage.jwtToken);
+			const userId = { id: userid };
 			checkUserInfo(userId).then((response) => {
 				setAvatar(response.data[0].avatar);
 			});

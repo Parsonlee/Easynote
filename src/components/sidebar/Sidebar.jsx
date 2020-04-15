@@ -35,14 +35,9 @@ const Sidebar = ({ show, category }) => {
 		}
 	};
 
-	const handleClickDelBtn = (contentId, i) => {
+	const handleClickDelBtn = (contentId) => {
 		deleteByContentId(contentId);
-		const nextIndex = i + 1;
-		if (nextIndex < data.length) {
-			history.push(`${data[i + 1].contentId}`);
-		} else {
-			history.push(`nocontent`);
-		}
+		history.push('/');
 	};
 
 	return (
@@ -72,13 +67,13 @@ const Sidebar = ({ show, category }) => {
 					return (
 						item.category === category && (
 							<SidebarItem
-								key={item.contentId}
+								key={i}
 								title={item.title}
 								desription={item.description}
 								updateTime={item.updateTime}
 								active={item.contentId === params.contentId}
 								onTap={() => history.push(`/${category}/${item.contentId}`)}
-								onClickDelBtn={() => handleClickDelBtn(item.contentId, i)}
+								onClickDelBtn={() => handleClickDelBtn(item.contentId)}
 							/>
 						)
 					);

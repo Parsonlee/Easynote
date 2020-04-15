@@ -8,16 +8,7 @@ import SidebarDelBtn from './SidebarDelBtn';
 
 import useThemeModel from '../../models/useThemeModel';
 
-const SideListItem = ({
-	// 数据
-	title,
-	desription,
-	updateTime,
-	//
-	active,
-	onTap,
-	onClickDelBtn
-}) => {
+const SideListItem = ({ title,desription,updateTime,active,onTap,onClickDelBtn }) => {
 	const { theme } = useThemeModel();
 	const [showDel, setShowDel] = useState(false);
 
@@ -81,14 +72,14 @@ const SideListItem = ({
 				box-shadow: ${active ? `0 0 30px ${theme.color.shadow}` : 'none'};
 				z-index: ${active ? 1 : 0};
 				h4 {
-					font-size: 16px;
+					font-size: 14px;
 					margin: 0;
 					${ellipsis('100%')};
 					width: 100%;
 					white-space: nowrap;
 				}
 				p {
-					font-size: 14px;
+					font-size: 12px;
 					margin: 0;
 					margin-bottom: 6px;
 					color: ${theme.color.caption};

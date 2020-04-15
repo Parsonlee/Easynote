@@ -2,20 +2,34 @@ import { memo } from 'react';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { motion } from 'framer-motion';
+import jwtDecode from 'jwt-decode';
 
 import useThemeModel from '../../models/useThemeModel';
+import useDataModel from '../../models/useDataModel';
+import useAuthModel from '../../models/useAuthModel';
+import { newNote, getNote } from '../../utils/requests';
 
-const CreateBtn = ({ children = '+写文章', onTap, onClick }) => {
+const CreateBtn = ({ children = '+写文章' }) => {
 	const { theme } = useThemeModel();
+	const { setNote } = useDataModel();
+	const { auth } = useAuthModel();
+
+	const createNote = () => {
+		if (auth) {
+			const { userid } = jwtDecode(localStorage.getItem('jwtToken'));
+			const request = { userId: userid };
+			newNote(request).then((res) => {
+				getNote(request).then((response) => setNote(response.data));
+			});
+		}
+	};
 
 	return (
 		<motion.div
-			onTap={onTap || onClick}
+			onClick={createNote}
 			css={css`
 				border-radius: 20px;
-				/* background: ${theme.button.background}; */
 				background: ${theme.background.base};
-				/* color: ${theme.button.color}; */
 				box-shadow: 0 0 30px ${theme.color.shadow};
 				color: ${theme.button.background};
 				cursor: pointer;

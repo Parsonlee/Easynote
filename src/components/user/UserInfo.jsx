@@ -10,6 +10,7 @@ import { FormInput, FormBtn, FormLabel, BackBtn } from './Register';
 import { logOut, checkUserInfo, updataAvatar } from '../../utils/requests';
 import useThemeModel from '../../models/useThemeModel';
 import useAuthModel from '../../models/useAuthModel';
+import useDataModel from '../../models/useDataModel';
 
 const UserInfo = () => {
 	const initInfo = {
@@ -21,11 +22,12 @@ const UserInfo = () => {
 	};
 	const { theme } = useThemeModel();
 	const { setAuthStatus } = useAuthModel();
+	const { setData } = useDataModel();
 	const [info, setInfo] = useState(initInfo);
 	const history = useHistory();
 
-	const { id } = jwtDecode(localStorage.jwtToken);
-	const userId = { id: id };
+	const { userid } = jwtDecode(localStorage.jwtToken);
+	const userId = { id: userid };
 
 	// 获取用户信息
 	useEffect(() => {
@@ -44,6 +46,14 @@ const UserInfo = () => {
 	const logout = () => {
 		logOut();
 		setAuthStatus();
+		setData([{
+				contentId: '0',
+				category: 'note',
+				updateTime: '2020-03-11 00:52',
+				title: '🌈🌈😁😁😁',
+				description:'beatae illum cumque repudiandae corporis iure molestiae tempore.',
+				content:'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam veritatis sapiente',
+			}]);
 		history.push('/');
 	};
 
@@ -58,8 +68,8 @@ const UserInfo = () => {
 		const fileReader = new FileReader();
 		fileReader.readAsDataURL(userAvatar);
 		fileReader.onload = () => {
-			updataAvatar({ id, avatar: fileReader.result });
-			console.log({ id, avatar: fileReader.result });
+			updataAvatar({ userid, avatar: fileReader.result });
+			console.log({ userid, avatar: fileReader.result });
 			setInfo({ ...info, avatar: fileReader.result });
 		};
 	};

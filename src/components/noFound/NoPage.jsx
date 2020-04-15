@@ -10,7 +10,7 @@ const NoPage = ({redirectTo}) => {
 	return (
 		<div
 			css={css`
-				font-size: 4rem;
+				font-size: 3.5rem;
 				align-self: center;
 				flex: 1;
 				display: flex;

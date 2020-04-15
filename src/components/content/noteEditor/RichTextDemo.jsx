@@ -1,18 +1,22 @@
 import { useCallback, useMemo, useState, useEffect } from 'react';
-import { Editable, withReact,useSlate, Slate } from 'slate-react';
+import { Editable, withReact, useSlate, Slate } from 'slate-react';
 import { Editor, Transforms, createEditor } from 'slate';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 
 import ToolBar from '../toolbar/ToolBar';
 import EditBar from '../toolbar/EditBar';
-// import useDataModel from '../../../models/useDataModel';
+import { updateNote, getNote } from '../../../utils/requests';
+import useAuthModel from '../../../models/useAuthModel';
+import useDataModel from '../../../models/useDataModel';
 
 const RichTextDemo = () => {
 	const params = useParams();
-	// const { data,setData } = useDataModel();
+	const { auth } = useAuthModel();
+	const { setNote } = useDataModel();
 	const [showEditBar, setShowEditBar] = useState(false);
 	const [value, setValue] = useState(initialValue);
 
@@ -32,18 +36,39 @@ const RichTextDemo = () => {
 	const notLostFocus = (e) => {
 		e && e.preventDefault();
 	};
-	
+	const modifyNote = () => {
+		if (auth) {
+			const { userid } = jwtDecode(localStorage.getItem('jwtToken'));
+			const request = {
+				userId: userid,
+				id: params.contentId,
+				content: JSON.stringify(value),
+			};
+			// console.log(request);
+			updateNote(request);
+			getNote({userId: userid}).then((response) => setNote(response.data));
+		}
+	};
+
 	return (
 		<EditField>
 			<Slate
 				editor={editor}
 				value={value}
 				onChange={(value) => {
-					setValue(value);
-					const content = JSON.stringify(value);
-					localStorage.setItem(`${params.contentId}`, content);
+					if (auth) {
+						setValue(value);
+						const content = JSON.stringify(value);
+						localStorage.setItem(`${params.contentId}`, content);
+					}
 				}}
 			>
+				<Editable
+					renderElement={renderElement}
+					renderLeaf={renderLeaf}
+					onBlur={modifyNote}
+					autoFocus
+				/>
 				<ToolBar
 					css={css`
 						position: absolute;
@@ -61,12 +86,7 @@ const RichTextDemo = () => {
 					<MarkButton content='下划线' format='underline' />
 				</EditBar>
 
-				<Editable
-					renderElement={renderElement}
-					renderLeaf={renderLeaf}
-					placeholder='Enter some rich text…'
-					autoFocus
-				/>
+				
 			</Slate>
 		</EditField>
 	);
@@ -149,7 +169,7 @@ const BlockButton = ({ format, content }) => {
 					left: -10px;
 					transform: translateY(-50%);
 					padding: 3px;
-					background: #2DCA70;
+					background: #2dca70;
 					border-radius: 50%;
 					display: ${isBlockActive(editor, format) ? 'block' : 'none'};
 				`}
@@ -184,7 +204,7 @@ const MarkButton = ({ format, content }) => {
 					left: -10px;
 					transform: translateY(-50%);
 					padding: 3px;
-					background: #2DCA70;
+					background: #2dca70;
 					border-radius: 50%;
 					display: ${isMarkActive(editor, format) ? 'block' : 'none'};
 				`}
@@ -198,43 +218,20 @@ const MarkButton = ({ format, content }) => {
 const EditField = styled.div`
 	position: relative;
 	background: #ffffff;
-	padding: 20px 50px;
-	width: 100%;
+	padding: 0 50px;
+	width: 95%;
 	height: 100%;
 	margin: 0 auto;
 	outline: none;
 `;
-
 const initialValue = [
 	{
-		type: 'paragraph',
-		children: [
-			{ text: 'This is editable ' },
-			{ text: 'rich', bold: true },
-			{ text: ' text, ' },
-			{ text: 'much', italic: true },
-			{ text: ' better than a ' },
-			{ text: '<textarea>' },
-			{ text: '!' },
-		],
+		type: 'heading-two',
+		children: [{ text: '🌈🌈😁😁😁' }],
 	},
-	{
-		type: 'paragraph',
-		children: [
-			{
-				text:
-					"Since it's rich text, you can do things like turn a selection of text ",
-			},
-			{ text: 'bold', bold: true },
-			{
-				text:
-					', or add a semantically rendered block quote in the middle of the page, like this:',
-			},
-		],
-	},
-	{
-		type: 'paragraph',
-		children: [{ text: 'Try it out for yourself!' }],
+	{ 
+		type: 'paragraph', 
+		children: [{ text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam veritatis sapiente' }] 
 	},
 ];
 

@@ -13,7 +13,7 @@ router.post('/login', async ctx => {
 	if (results.length > 0) {
 		const token = jwt.sign(
 			{
-				id: results[0].id,
+				userid: results[0].id,
 				username: results[0].username
 			},
 			config.jwtSecret,

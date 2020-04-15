@@ -21,7 +21,7 @@ const NoContent = ()=>{
         text-decoration: none;
       }
     `}>
-      请从侧栏选择一篇文章或新建
+      请从侧栏选择一个条目或新建
     </div>
   )
 }

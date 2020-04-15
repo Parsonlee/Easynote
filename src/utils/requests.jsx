@@ -38,7 +38,7 @@ export const updataAvatar = (userData) => {
 };
 
 // 查询用户笔记
-export const getNoteData = (userId) => {
+export const getNote = (userId) => {
 	return axios.post('http://localhost:3100/api/note', userId);
 };
 

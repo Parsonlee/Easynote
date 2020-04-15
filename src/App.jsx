@@ -44,11 +44,6 @@ const App = () => {
 		setCategory(index);
 	};
 
-	// 创建文章
-	const handleTapCreate = () => {
-		// 创建文章
-	};
-
 	// 用户视图
 	const handleClickUser = () => {
 		if (auth) {
@@ -80,7 +75,7 @@ const App = () => {
 								activeIndex={category}
 								onSwitch={handleCategorySwitch}
 							/>
-							<CreateBtn onTap={handleTapCreate}>+ 写文章</CreateBtn>
+							<CreateBtn>+ 写文章</CreateBtn>
 							<User onClick={handleClickUser} />
 						</Header>
 					</Route>

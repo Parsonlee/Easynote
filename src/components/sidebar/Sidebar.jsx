@@ -20,7 +20,7 @@ const Sidebar = ({ show, category }) => {
 	const variants = {
 		show: {
 			// width: '160px',
-			width: between('80px', '168px'),
+			width: between('90px', '170px'),
 			x: '0',
 			transition: {
 				ease: 'easeOut',

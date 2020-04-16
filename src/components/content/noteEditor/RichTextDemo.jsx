@@ -38,7 +38,7 @@ const RichTextDemo = () => {
 	};
 	const modifyNote = () => {
 		if (auth) {
-			const { userid } = jwtDecode(localStorage.getItem('jwtToken'));
+			const { userid } = jwtDecode(localStorage.getItem('token'));
 			const request = {
 				userId: userid,
 				id: params.contentId,
@@ -46,7 +46,7 @@ const RichTextDemo = () => {
 			};
 			// console.log(request);
 			updateNote(request);
-			getNote({userId: userid}).then((response) => setNote(response.data));
+			getNote({ userId: userid }).then((response) => setNote(response.data));
 		}
 	};
 
@@ -85,8 +85,6 @@ const RichTextDemo = () => {
 					<MarkButton content='斜体' format='italic' />
 					<MarkButton content='下划线' format='underline' />
 				</EditBar>
-
-				
 			</Slate>
 		</EditField>
 	);
@@ -229,9 +227,14 @@ const initialValue = [
 		type: 'heading-two',
 		children: [{ text: '🌈🌈😁😁😁' }],
 	},
-	{ 
-		type: 'paragraph', 
-		children: [{ text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam veritatis sapiente' }] 
+	{
+		type: 'paragraph',
+		children: [
+			{
+				text:
+					'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam veritatis sapiente',
+			},
+		],
 	},
 ];
 

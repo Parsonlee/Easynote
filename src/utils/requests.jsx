@@ -1,5 +1,16 @@
 import axios from 'axios';
-import setAuthToken from '../utils/setAuthToken';
+
+axios.interceptors.request.use(
+	function (config) {
+		const token = localStorage.getItem('token');
+		axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+		config.headers.Authorization = `Bearer ${token}`;
+		return config;
+	},
+	function (error) {
+		return Promise.reject(error);
+	}
+);
 
 // 注册
 export const userRegisterRequest = (userData) => {
@@ -13,18 +24,14 @@ export const isUserExist = (username) => {
 
 // 登录
 export const login = (data) => {
-	return axios.post('http://localhost:3100/api/login', data).then((res) => {
-		const token = res.data;
-		localStorage.setItem('jwtToken', token);
-		setAuthToken(token); //登录后发送的请求带上token
-	});
+	return axios.post('http://localhost:3100/api/login', data);
 };
 
 // 退出登录
 export const logOut = () => {
-	localStorage.clear();
 	//取消请求头中的信息
-	setAuthToken(false);
+	delete axios.defaults.headers.common['Authorization'];
+	localStorage.clear();
 };
 
 // 查询用户信息

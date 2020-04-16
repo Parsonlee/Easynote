@@ -1,6 +1,7 @@
 import { memo } from 'react';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
+import { between } from 'polished';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -18,21 +19,22 @@ const Sidebar = ({ show, category }) => {
 	// 动画
 	const variants = {
 		show: {
-			width: '168px',
+			// width: '160px',
+			width: between('80px', '168px'),
 			x: '0',
 			transition: {
 				ease: 'easeOut',
-				duration: 0.3
-			}
+				duration: 0.3,
+			},
 		},
 		hide: {
 			width: 0,
 			x: '0',
 			transition: {
 				ease: 'circOut',
-				duration: 0.4
-			}
-		}
+				duration: 0.4,
+			},
+		},
 	};
 
 	const handleClickDelBtn = (contentId) => {

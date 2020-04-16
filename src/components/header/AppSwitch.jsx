@@ -69,6 +69,7 @@ const StyledAppSwitch = styled.div`
 	font-size: 14px;
 	color: ${({ theme }) => theme.color.caption};
 	user-select: none;
+	-webkit-app-region: no-drag;
 	.item {
 		padding: 15px;
 		cursor: pointer;

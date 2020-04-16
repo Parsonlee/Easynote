@@ -54,7 +54,7 @@ function useData() {
 
 	useEffect(() => {
 		if (auth) {
-			const { userid } = jwtDecode(localStorage.getItem('jwtToken'));
+			const { userid } = jwtDecode(localStorage.getItem('token'));
 			const userId = { userId: userid };
 			getNote(userId).then((response) => setNote(response.data));
 		}
@@ -63,7 +63,7 @@ function useData() {
 
 	const deleteByContentId = (contentId) => {
 		if (auth) {
-			const { userid } = jwtDecode(localStorage.getItem('jwtToken'));
+			const { userid } = jwtDecode(localStorage.getItem('token'));
 			const request = { userId: userid, id: contentId };
 			// console.log(request);
 			deleteNote(request);

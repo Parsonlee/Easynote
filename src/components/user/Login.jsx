@@ -5,7 +5,14 @@ import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { FormTitle,FormLabel,FormInput,FormBtn,ErrorText,BackBtn } from './Register';
+import {
+	FormTitle,
+	FormLabel,
+	FormInput,
+	FormBtn,
+	ErrorText,
+	BackBtn,
+} from './Register';
 import { validateInput } from '../../utils/loginValidate';
 import { login } from '../../utils/requests';
 import useThemeModel from '../../models/useThemeModel';
@@ -22,6 +29,7 @@ const Login = () => {
 	const { theme } = useThemeModel();
 	const { auth, setAuthStatus } = useAuthModel();
 	const [value, setValue] = useState(initValue);
+
 	useEffect(() => {
 		if (auth) {
 			history.push('/userInfo');
@@ -50,9 +58,11 @@ const Login = () => {
 			setValue({ ...value, errors: {}, isLoading: true });
 			// 登录成功，跳转路由
 			login(value).then(
-				() => {
-					history.push('/note');
+				(res) => {
+					const { token } = res.data;
+					localStorage.setItem('token', token);
 					setAuthStatus();
+					history.push('/note');
 				},
 				({ response }) =>
 					setValue({ ...value, errors: response.data, isLoading: false })
@@ -60,13 +70,13 @@ const Login = () => {
 		}
 	};
 
-	const backToIndex = ()=>{
+	const backToIndex = () => {
 		history.push('/');
-	}
+	};
 
-	const toRegister = ()=>{
+	const toRegister = () => {
 		history.push('/register');
-	}
+	};
 
 	const { errors, isLoading } = value;
 	return (
@@ -121,14 +131,19 @@ const Login = () => {
 			<FormBtn theme={theme} disabled={isLoading}>
 				登录
 			</FormBtn>
-			<button onClick={toRegister} css={css`
-				text-decoration: underline;
-				font-size: 0.85rem;
-				margin-top: 15px;
-				color: #9e9e9e;
-				border: none;
-				cursor: pointer;
-			`}>还没有账号？请点这里</button>
+			<button
+				onClick={toRegister}
+				css={css`
+					text-decoration: underline;
+					font-size: 0.85rem;
+					margin-top: 15px;
+					color: #9e9e9e;
+					border: none;
+					cursor: pointer;
+				`}
+			>
+				还没有账号？请点这里
+			</button>
 		</form>
 	);
 };

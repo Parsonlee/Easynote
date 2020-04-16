@@ -26,7 +26,7 @@ const UserInfo = () => {
 	const [info, setInfo] = useState(initInfo);
 	const history = useHistory();
 
-	const { userid } = jwtDecode(localStorage.jwtToken);
+	const { userid } = jwtDecode(localStorage.token);
 	const userId = { id: userid };
 
 	// 获取用户信息
@@ -46,14 +46,18 @@ const UserInfo = () => {
 	const logout = () => {
 		logOut();
 		setAuthStatus();
-		setData([{
+		setData([
+			{
 				contentId: '0',
 				category: 'note',
 				updateTime: '2020-03-11 00:52',
 				title: '🌈🌈😁😁😁',
-				description:'beatae illum cumque repudiandae corporis iure molestiae tempore.',
-				content:'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam veritatis sapiente',
-			}]);
+				description:
+					'beatae illum cumque repudiandae corporis iure molestiae tempore.',
+				content:
+					'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam veritatis sapiente',
+			},
+		]);
 		history.push('/');
 	};
 

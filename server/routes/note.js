@@ -1,11 +1,13 @@
 const router = require('koa-router')();
 const sqlFn = require('../mysql');
+const { jwtSecret } = require('../config');
+const jsonwebtoken = require('jsonwebtoken');
+const auth = require('../middlewares/auth')
 
 // 查询现有的笔记
-router.post('/note', async (ctx) => {
+router.post('/note', auth, async (ctx) => {
 	const { userId } = ctx.request.body;
-	const sql =
-		'SELECT id,category,updateTime,content FROM note WHERE userId=?';
+	const sql = 'SELECT id,category,updateTime,content FROM note WHERE userId=?';
 	const results = await sqlFn(sql, userId);
 	if (results) {
 		ctx.body = results;
@@ -15,7 +17,7 @@ router.post('/note', async (ctx) => {
 });
 
 // 增加笔记
-router.post('/newnote', async (ctx) => {
+router.post('/newnote', auth, async (ctx) => {
 	const data = ctx.request.body;
 	const sql = 'INSERT INTO note (userId) VALUES (?)';
 	const arr = [data.userId, data.content];
@@ -28,7 +30,7 @@ router.post('/newnote', async (ctx) => {
 });
 
 // 修改笔记
-router.post('/updatenote', async (ctx) => {
+router.post('/updatenote', auth, async (ctx) => {
 	const data = ctx.request.body;
 	const sql = 'UPDATE note SET content=? WHERE userId=? AND id=?';
 	const arr = [data.content, data.userId, data.id];
@@ -41,7 +43,7 @@ router.post('/updatenote', async (ctx) => {
 });
 
 // 删除笔记
-router.post('/deletenote', async (ctx) => {
+router.post('/deletenote', auth, async (ctx) => {
 	const data = ctx.request.body;
 	const sql = 'DELETE FROM note WHERE userId=? AND id=?';
 	const arr = [data.userId, data.id];

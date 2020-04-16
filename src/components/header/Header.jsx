@@ -17,10 +17,11 @@ const Header = ({ children }) => {
 				align-items: center;
 				overflow: hidden;
 				z-index: 999;
+				-webkit-app-region: drag;
 			`}
 		>
-      {children}
-    </div>
+			{children}
+		</div>
 	);
 };
 

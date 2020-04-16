@@ -129,6 +129,7 @@ const StyledMenuBtn = styled(motion.div)`
 	cursor: pointer;
 	opacity: 0.6;
 	user-select: none;
+	-webkit-app-region: no-drag;
 `;
 
 export default memo(MenuBtn);

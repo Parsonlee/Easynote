@@ -16,7 +16,7 @@ const CreateBtn = ({ children = '+写文章' }) => {
 
 	const createNote = () => {
 		if (auth) {
-			const { userid } = jwtDecode(localStorage.getItem('jwtToken'));
+			const { userid } = jwtDecode(localStorage.getItem('token'));
 			const request = { userId: userid };
 			newNote(request).then((res) => {
 				getNote(request).then((response) => setNote(response.data));
@@ -37,6 +37,7 @@ const CreateBtn = ({ children = '+写文章' }) => {
 				justify-content: center;
 				align-items: center;
 				user-select: none;
+				-webkit-app-region: no-drag;
 			`}
 			whileHover={{ scale: 1.1 }}
 			whileTap={{ scale: 0.9 }}

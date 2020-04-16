@@ -5,9 +5,9 @@ function useAuthModel() {
 	const [auth, setAuth] = useState(false);
 
 	const setAuthStatus = () => {
-		if (localStorage.jwtToken) {
+		if (localStorage.token) {
 			setAuth(true);
-		}else{
+		} else {
 			setAuth(false);
 		}
 	};

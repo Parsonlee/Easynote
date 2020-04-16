@@ -1,8 +1,9 @@
 const router = require('koa-router')();
 const sqlFn = require('../mysql');
+const auth = require('../middlewares/auth');
 
 // 查看用户信息
-router.post('/userInfo', async (ctx) => {
+router.post('/userInfo',  async (ctx) => {
 	const { id } = ctx.request.body;
 	const sql = 'select * from user where `id`=?';
 	const results = await sqlFn(sql, id);
@@ -15,10 +16,10 @@ router.post('/userInfo', async (ctx) => {
 });
 
 // 上传用户头像
-router.post('/userAvatar', async (ctx) => {
+router.post('/userAvatar', auth, async (ctx) => {
 	const { id, avatar } = ctx.request.body;
 	const sql = 'UPDATE user SET avatar=? WHERE id=?;';
-	const arr = [avatar, id]
+	const arr = [avatar, id];
 	const results = await sqlFn(sql, arr);
 
 	if (results.affectedRows) {

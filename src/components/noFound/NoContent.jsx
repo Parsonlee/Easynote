@@ -10,14 +10,14 @@ const NoContent = () => {
 		<div
 			css={css`
 				padding: 0 50px;
-				font-size: 3.6rem;
+				font-size: 3.4rem;
 				flex: 1;
 				display: flex;
 				justify-content: center;
 				align-items: center;
 				color: ${theme.color.hint};
 				transform: translateY(-8%);
-				white-space: nowrap;
+				/* white-space: nowrap; */
 				a {
 					color: ${theme.primary.base};
 					text-decoration: none;

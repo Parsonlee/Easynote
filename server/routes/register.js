@@ -9,7 +9,7 @@ const validateInput = (data) => {
 		errors.username = '请填写用户名';
 	}
 	if (!validator.isEmail(data.email)) {
-		errors.email = '请填写邮箱';
+		errors.email = '请填写正确的邮箱';
 	}
 	if (validator.isEmpty(data.phone)) {
 		errors.phone = '请填写电话号码';

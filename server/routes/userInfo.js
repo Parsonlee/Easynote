@@ -17,10 +17,11 @@ router.post('/userInfo',  async (ctx) => {
 
 // 上传用户头像
 router.post('/userAvatar', auth, async (ctx) => {
-	const { id, avatar } = ctx.request.body;
+	const { userid, avatar } = ctx.request.body;
 	const sql = 'UPDATE user SET avatar=? WHERE id=?;';
-	const arr = [avatar, id];
+	const arr = [avatar, userid];
 	const results = await sqlFn(sql, arr);
+	console.log(results);
 
 	if (results.affectedRows) {
 		ctx.body = 'success';

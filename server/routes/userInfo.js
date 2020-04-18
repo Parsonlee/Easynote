@@ -21,7 +21,6 @@ router.post('/userAvatar', auth, async (ctx) => {
 	const sql = 'UPDATE user SET avatar=? WHERE id=?;';
 	const arr = [avatar, userid];
 	const results = await sqlFn(sql, arr);
-	console.log(results);
 
 	if (results.affectedRows) {
 		ctx.body = 'success';

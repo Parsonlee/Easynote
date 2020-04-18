@@ -1,8 +1,6 @@
 const router = require('koa-router')();
 const sqlFn = require('../mysql');
-const { jwtSecret } = require('../config');
-const jsonwebtoken = require('jsonwebtoken');
-const auth = require('../middlewares/auth')
+const auth = require('../middlewares/auth');
 
 // 查询现有的笔记
 router.post('/note', auth, async (ctx) => {
@@ -19,8 +17,10 @@ router.post('/note', auth, async (ctx) => {
 // 增加笔记
 router.post('/newnote', auth, async (ctx) => {
 	const data = ctx.request.body;
-	const sql = 'INSERT INTO note (userId) VALUES (?)';
-	const arr = [data.userId, data.content];
+	const sql = 'INSERT INTO note (userId,content) VALUES (?,?)';
+	const content =
+		'[{"type":"heading-two","children":[{"text":"点这里写标题，回车开始编辑内容"}]}]';
+	const arr = [data.userId, content];
 	const results = await sqlFn(sql, arr);
 	if (results.affectedRows) {
 		ctx.body = 'success';

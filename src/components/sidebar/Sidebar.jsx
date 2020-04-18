@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useHistory } from 'react-router-dom';
 
 import SidebarItem from './SidebarItem';
-
 import useDataModel from '../../models/useDataModel';
 import useThemeModel from '../../models/useThemeModel';
 
@@ -19,7 +18,6 @@ const Sidebar = ({ show, category }) => {
 	// 动画
 	const variants = {
 		show: {
-			// width: '160px',
 			width: between('90px', '170px'),
 			x: '0',
 			transition: {
@@ -73,7 +71,7 @@ const Sidebar = ({ show, category }) => {
 								title={item.title}
 								desription={item.description}
 								updateTime={item.updateTime}
-								active={item.contentId === params.contentId}
+								active={item.contentId.toString() === params.contentId}
 								onTap={() => history.push(`/${category}/${item.contentId}`)}
 								onClickDelBtn={() => handleClickDelBtn(item.contentId)}
 							/>

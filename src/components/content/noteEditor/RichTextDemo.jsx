@@ -68,6 +68,7 @@ const RichTextDemo = () => {
 					renderLeaf={renderLeaf}
 					onBlur={modifyNote}
 					autoFocus
+					spellCheck={false}
 				/>
 				<ToolBar
 					css={css`
@@ -216,10 +217,9 @@ const MarkButton = ({ format, content }) => {
 const EditField = styled.div`
 	position: relative;
 	background: #ffffff;
-	padding: 0 50px;
-	width: 95%;
+	width: 100%;
 	height: 100%;
-	margin: 0 auto;
+	padding: 0 65px;
 	outline: none;
 `;
 const initialValue = [

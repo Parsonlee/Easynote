@@ -40,7 +40,7 @@ export const checkUserInfo = (userId) => {
 };
 
 // 修改用户头像
-export const updataAvatar = (userData) => {
+export const updateAvatar = (userData) => {
 	return axios.post('http://localhost:3100/api/userAvatar', userData);
 };
 

@@ -5,10 +5,16 @@ import { ellipsis } from 'polished';
 import { motion } from 'framer-motion';
 
 import SidebarDelBtn from './SidebarDelBtn';
-
 import useThemeModel from '../../models/useThemeModel';
 
-const SideListItem = ({ title,desription,updateTime,active,onTap,onClickDelBtn }) => {
+const SideListItem = ({
+	title,
+	desription,
+	updateTime,
+	active,
+	onTap,
+	onClickDelBtn,
+}) => {
 	const { theme } = useThemeModel();
 	const [showDel, setShowDel] = useState(false);
 
@@ -18,26 +24,26 @@ const SideListItem = ({ title,desription,updateTime,active,onTap,onClickDelBtn }
 	const handleHoverEnd = () => {
 		setShowDel(false);
 	};
-
 	// 挂载动画
 	const variants = {
 		initial: {
 			x: '-100%',
-			opacity: 0
+			opacity: 0,
 		},
 		animate: {
 			x: 0,
-			opacity: 1
+			opacity: 1,
 		},
 		exit: {
 			x: '-100%',
-			opacity: 0
+			opacity: 0,
 		},
 		hover: {
-			scale: 1.03
-		}
+			scale: 1.03,
+		},
 	};
 
+	console.log(active);
 	return (
 		<motion.div
 			variants={variants}
@@ -91,7 +97,7 @@ const SideListItem = ({ title,desription,updateTime,active,onTap,onClickDelBtn }
 					justify-content: space-between;
 					white-space: nowrap;
 				}
-				.time-date{
+				.time-date {
 					font-size: 12px;
 					color: ${theme.color.hint};
 					white-space: nowrap;

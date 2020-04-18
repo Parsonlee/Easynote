@@ -11,7 +11,11 @@ const userInfo = require('./routes/userInfo');
 
 const app = new Koa();
 app.use(cors());
-app.use(bodyparser());
+app.use(bodyparser(({
+	"formLimit":"5mb",
+	"jsonLimit":"5mb",
+	"textLimit":"5mb"
+})));
 app.use(router.routes()).use(router.allowedMethods());
 
 router.use('/api', note.routes());

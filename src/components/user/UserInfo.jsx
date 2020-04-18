@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import jwtDecode from 'jwt-decode';
 
 import { FormInput, FormBtn, FormLabel, BackBtn } from './Register';
-import { logOut, checkUserInfo, updataAvatar } from '../../utils/requests';
+import { logOut, checkUserInfo, updateAvatar } from '../../utils/requests';
 import useThemeModel from '../../models/useThemeModel';
 import useAuthModel from '../../models/useAuthModel';
 import useDataModel from '../../models/useDataModel';
@@ -67,14 +67,14 @@ const UserInfo = () => {
 
 	const changeAvatar = () => {
 		const input = document.querySelector('input[type=file]');
-		console.log(input);
 		const userAvatar = input.files[0];
 		const fileReader = new FileReader();
 		fileReader.readAsDataURL(userAvatar);
 		fileReader.onload = () => {
-			updataAvatar({ userid, avatar: fileReader.result });
-			console.log({ userid, avatar: fileReader.result });
-			setInfo({ ...info, avatar: fileReader.result });
+			updateAvatar({ userid, avatar: fileReader.result }).then(() => {
+				console.log({ userid, avatar: fileReader.result });
+				setInfo({ ...info, avatar: fileReader.result });
+			});
 		};
 	};
 

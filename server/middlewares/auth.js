@@ -1,5 +1,5 @@
 const { jwtSecret } = require('../config');
-const jsonwebtoken = require('jsonwebtoken')
+const jsonwebtoken = require('jsonwebtoken');
 
 const auth = async (ctx, next) => {
 	const { authorization = '' } = ctx.request.header; // token: 'Bearer nnnsnosiaj8d9u8ada'
@@ -8,7 +8,6 @@ const auth = async (ctx, next) => {
 
 	try {
 		const user = jsonwebtoken.verify(token, jwtSecret);
-
 		ctx.state.user = user;
 	} catch (err) {
 		ctx.throw(401, '没有权限');

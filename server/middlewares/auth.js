@@ -2,7 +2,7 @@ const { jwtSecret } = require('../config');
 const jsonwebtoken = require('jsonwebtoken');
 
 const auth = async (ctx, next) => {
-	const { authorization = '' } = ctx.request.header; // token: 'Bearer nnnsnosiaj8d9u8ada'
+	const { authorization = '' } = ctx.request.header; 
 
 	const token = authorization.replace('Bearer ', '');
 

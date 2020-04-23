@@ -102,7 +102,7 @@ const App = () => {
 								</Route>
 								<Route path='/note/:contentId'>
 									<Sidebar category='note' show={showSidebar} />
-									<RichTextDemo></RichTextDemo>
+									<RichTextDemo />
 								</Route>
 							</Switch>
 						</MainBody>

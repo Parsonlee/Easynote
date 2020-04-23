@@ -43,7 +43,6 @@ const SideListItem = ({
 		},
 	};
 
-	console.log(active);
 	return (
 		<motion.div
 			variants={variants}

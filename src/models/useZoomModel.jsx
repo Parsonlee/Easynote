@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 function useZoom() {
 	const [zoom, setZoom] = useState(
-		document.body.clientWidth < 999 ? true : false
+		document.body.clientWidth < 970 ? true : false
 	);
 
 	const toggleZoom = () => {

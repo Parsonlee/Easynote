@@ -63,3 +63,27 @@ export const updateNote = (data) => {
 export const deleteNote = (data) => {
 	return axios.post('http://localhost:3100/api/deletenote', data);
 };
+
+// 查询用户待办
+export const getTodo = (userId) => {
+	return axios.post('http://localhost:3100/api/todo', userId);
+};
+// 新增待办
+export const newTodo = (data) => {
+	return axios.post('http://localhost:3100/api/newtodo', data);
+};
+
+// 修改待办标题
+export const updateTodoTitle = (data) => {
+	return axios.post('http://localhost:3100/api/updatetodotitle', data);
+};
+
+// 修改待办内容
+export const updateTodoContent = (data) => {
+	return axios.post('http://localhost:3100/api/updatetodoContent', data);
+};
+
+// 删除待办
+export const deleteTodo = (data) => {
+	return axios.post('http://localhost:3100/api/deletetodo', data);
+};

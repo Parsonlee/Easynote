@@ -5,13 +5,13 @@ import { between } from 'polished';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useHistory } from 'react-router-dom';
 
-import SidebarItem from './SidebarItem';
+import SideItem from './SidebarItem copy';
 import useDataModel from '../../models/useDataModel';
 import useThemeModel from '../../models/useThemeModel';
 
-const Sidebar = ({ show, category }) => {
+const Side = ({ show, category }) => {
 	const { theme } = useThemeModel();
-	const { data, deleteByContentId } = useDataModel();
+	const { deleteByContentId, todo } = useDataModel();
 	const params = useParams();
 	const history = useHistory();
 
@@ -36,8 +36,8 @@ const Sidebar = ({ show, category }) => {
 	};
 
 	const handleClickDelBtn = (contentId) => {
-		deleteByContentId(contentId, 'note');
-		history.push('/note');
+		deleteByContentId(contentId, 'todo');
+		history.push('/todo');
 	};
 
 	return (
@@ -63,13 +63,12 @@ const Sidebar = ({ show, category }) => {
 			animate={show ? 'show' : 'hide'}
 		>
 			<AnimatePresence initial={false}>
-				{data.map((item, i) => {
+				{todo.map((item, i) => {
 					return (
 						item.category === category && (
-							<SidebarItem
+							<SideItem
 								key={i}
 								title={item.title}
-								desription={item.description}
 								updateTime={item.updateTime}
 								active={item.contentId.toString() === params.contentId}
 								onTap={() => history.push(`/${category}/${item.contentId}`)}
@@ -83,4 +82,4 @@ const Sidebar = ({ show, category }) => {
 	);
 };
 
-export default memo(Sidebar);
+export default memo(Side);

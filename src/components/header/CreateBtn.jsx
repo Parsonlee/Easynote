@@ -7,20 +7,26 @@ import jwtDecode from 'jwt-decode';
 import useThemeModel from '../../models/useThemeModel';
 import useDataModel from '../../models/useDataModel';
 import useAuthModel from '../../models/useAuthModel';
-import { newNote, getNote } from '../../utils/requests';
+import { newNote, getNote, newTodo, getTodo } from '../../utils/requests';
 
-const CreateBtn = ({ children = '+写文章' }) => {
+const CreateBtn = ({ children = '+写文章', category }) => {
 	const { theme } = useThemeModel();
-	const { setNote } = useDataModel();
+	const { setNoteData, setTodoData } = useDataModel();
 	const { auth } = useAuthModel();
 
 	const createNote = () => {
 		if (auth) {
 			const { userid } = jwtDecode(localStorage.getItem('token'));
 			const request = { userId: userid };
-			newNote(request).then((res) => {
-				getNote(request).then((response) => setNote(response.data));
-			});
+			if (category === 0) {
+				newNote(request).then(() => {
+					getNote(request).then((response) => setNoteData(response.data));
+				});
+			} else {
+				newTodo(request).then(() => {
+					getTodo(request).then((response) => setTodoData(response.data));
+				});
+			}
 		}
 	};
 

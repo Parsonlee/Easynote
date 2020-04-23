@@ -16,7 +16,7 @@ import useDataModel from '../../../models/useDataModel';
 const RichTextDemo = () => {
 	const params = useParams();
 	const { auth } = useAuthModel();
-	const { setNote } = useDataModel();
+	const { setNoteData } = useDataModel();
 	const [showEditBar, setShowEditBar] = useState(false);
 	const [value, setValue] = useState(initialValue);
 
@@ -46,7 +46,9 @@ const RichTextDemo = () => {
 			};
 			// console.log(request);
 			updateNote(request);
-			getNote({ userId: userid }).then((response) => setNote(response.data));
+			getNote({ userId: userid }).then((response) =>
+				setNoteData(response.data)
+			);
 		}
 	};
 
@@ -76,6 +78,7 @@ const RichTextDemo = () => {
 						right: 20px;
 						bottom: 40px;
 					`}
+					category='note'
 					toggleEditBar={toggleEditBar}
 					onMouseDown={notLostFocus}
 				/>

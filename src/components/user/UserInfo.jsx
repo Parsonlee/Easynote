@@ -22,7 +22,7 @@ const UserInfo = () => {
 	};
 	const { theme } = useThemeModel();
 	const { setAuthStatus } = useAuthModel();
-	const { setData } = useDataModel();
+	const { setData, initNote, initTodo, setTodo } = useDataModel();
 	const [info, setInfo] = useState(initInfo);
 	const history = useHistory();
 
@@ -46,16 +46,8 @@ const UserInfo = () => {
 	const logout = () => {
 		logOut();
 		setAuthStatus();
-		setData([
-			{
-				contentId: 0,
-				category: 'note',
-				updateTime: '2020-03-11 00:52:37',
-				title: '🌈🌈请点这里查看使用教程',
-				description: '🥳初次使用请先点击右上角头像，进入用户注册并登陆。',
-				content: '',
-			},
-		]);
+		setData(initNote);
+		setTodo(initTodo);
 		history.push('/');
 	};
 

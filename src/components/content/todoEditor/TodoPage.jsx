@@ -17,7 +17,7 @@ const TodoPage = () => {
 	const initTodoList = {};
 	const params = useParams();
 	const { auth } = useAuthModel();
-	const { todo, setTodoData, ToggleTodoItemFinished, getTodoContents } = useDataModel();
+	const { todo, setTodoData, toggleTodoItemFinished } = useDataModel();
 	const [todoList, setTodoList] = useState(initTodoList);
 	const myInput = useRef();
 
@@ -54,28 +54,55 @@ const TodoPage = () => {
 	const newTodoItem = (e) => {
 		e.persist();
 		setTodoList((prevState) => {
-			let newState = {};
-			newState = prevState;
+			let newState = { ...prevState };
 			if (e.target.value) {
-				newState.content.push(e.target.value);
+				newState.contents.push({
+					itemId: '0',
+					content: e.target.value,
+					finished: false,
+				});
 			}
 			return newState;
 		});
 		if (auth) {
+			const toString = (data, key) => {
+				return data.map((item) => item[key]).join('&');
+			};
 			const { userid } = jwtDecode(localStorage.getItem('token'));
 			const request = {
 				userId: userid,
 				id: params.contentId,
-				content: todoList.content.join('&'),
+				content: toString(todoList.contents, 'content'),
+				finished: toString(todoList.contents, 'finished'),
 			};
 			updateTodoContent(request);
 			getTodo({ userId: userid }).then((response) =>
 				setTodoData(response.data)
 			);
 		}
+		e.target.value = '';
 		myInput.current.className = 'notShow';
 	};
 
+	const changeFinish = (contentId, itemId) => {
+		toggleTodoItemFinished(contentId, itemId);
+		if (auth) {
+			const toString = (data, key) => {
+				return data.map((item) => item[key]).join('&');
+			};
+			const { userid } = jwtDecode(localStorage.getItem('token'));
+			const request = {
+				userId: userid,
+				id: params.contentId,
+				content: toString(todoList.contents, 'content'),
+				finished: toString(todoList.contents, 'finished'),
+			};
+			updateTodoContent(request);
+			getTodo({ userId: userid }).then((response) =>
+				setTodoData(response.data)
+			);
+		}
+	};
 
 	// const handleEnterKey = (e) => {
 	// 	if (e.nativeEvent.keyCode === 13) {
@@ -163,26 +190,27 @@ const TodoPage = () => {
 							height: 22px;
 							border: 2px solid #d0d0d0;
 							border-radius: 6px;
-							fill: #2DCA70;
+							fill: #2dca70;
 							display: flex;
 							justify-content: center;
 							align-items: center;
 							margin-right: 10px;
+							overflow: hidden;
 						}
 					`}
 				>
 					{todoList.contents &&
 						todoList.contents.map((item, i) => (
-							<div className='container'
-								key={i}
-								onClick={() =>
-									ToggleTodoItemFinished(parseInt(params.contentId), i)
-								}
-							>
-								<div className='checkme'>
-									{item.finished && (<svg t='1587830410954' className='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='1902' width='200' height='200'> <path d='M384.064 640.213333 213.482667 469.568 128.192 554.88 298.773333 725.525333 384.064 810.858667 895.850667 298.922667 810.56 213.589333 384.064 640.213333Z' p-id='1903' ></path> </svg>)}
+							<div className='container' key={i}>
+								<div
+									className='checkme'
+									onClick={() => changeFinish(parseInt(params.contentId), i) }
+								>
+									{item.finished && ( <svg t='1587830410954' className='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='1902' width='200' height='200' > {' '} <path d='M384.064 640.213333 213.482667 469.568 128.192 554.88 298.773333 725.525333 384.064 810.858667 895.850667 298.922667 810.56 213.589333 384.064 640.213333Z' p-id='1903' ></path>{' '} </svg> )}
 								</div>
-								<li className={` item ${item.finished ? 'item--finished' : ''} `} >
+								<li
+									className={` item ${item.finished ? 'item--finished' : ''} `}
+								>
 									{item.content}
 								</li>
 							</div>

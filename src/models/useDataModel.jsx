@@ -19,7 +19,7 @@ const initTodo = [
 	{
 		contentId: 19,
 		category: 'todo',
-		updateTime: '2020-03-11 00:52',
+		updateTime: '2020-03-11 00:52:50',
 		title: '下周目标',
 		contents: [
 			{
@@ -102,7 +102,7 @@ function useData() {
 		setTodo(newData);
 	};
 
-	const ToggleTodoItemFinished = (contentId, itemId) => {
+	const toggleTodoItemFinished = (contentId, itemId) => {
 		const newTodo = todo.map((todo) => {
 			if (todo.contentId === contentId) {
 				todo.contents[itemId].finished = !todo.contents[itemId].finished;
@@ -140,6 +140,8 @@ function useData() {
 	};
 
 	return {
+		initNote,
+		initTodo,
 		data,
 		setData,
 		todo,
@@ -148,7 +150,7 @@ function useData() {
 		getNoteInfo,
 		setNoteData,
 		setTodoData,
-		ToggleTodoItemFinished,
+		toggleTodoItemFinished,
 		getTodoContents,
 	};
 }

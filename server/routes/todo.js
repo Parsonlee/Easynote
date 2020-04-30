@@ -14,7 +14,7 @@ router.post('/todo', async (ctx) => {
 	}
 });
 
-// 增加待办
+// 增加待办篇章
 router.post('/newtodo', async (ctx) => {
 	const { userId } = ctx.request.body;
 	const sql = 'INSERT INTO todo (userId) VALUES (?)';
@@ -44,8 +44,8 @@ router.post('/updatetodotitle', async (ctx) => {
 // 修改待办内容
 router.post('/updatetodocontent', async (ctx) => {
 	const data = ctx.request.body;
-	const sql = 'UPDATE todo SET content=? WHERE userId=? AND id=?';
-	const arr = [data.content, data.userId, data.id];
+	const sql = 'UPDATE todo SET content=?, finished=? WHERE userId=? AND id=?';
+	const arr = [data.content, data.finished, data.userId, data.id];
 	const results = await sqlFn(sql, arr);
 
 	if (results.affectedRows) {

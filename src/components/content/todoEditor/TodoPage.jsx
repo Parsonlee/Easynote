@@ -14,12 +14,11 @@ import {
 } from '../../../utils/requests';
 
 const TodoPage = () => {
-	const initTodo = {};
+	const initTodoList = {};
 	const params = useParams();
 	const { auth } = useAuthModel();
-	const { todo, setTodoData } = useDataModel();
-	const [todoList, setTodoList] = useState(initTodo);
-	const [finish, setFinish] = useState(false);
+	const { todo, setTodoData, ToggleTodoItemFinished, getTodoContents } = useDataModel();
+	const [todoList, setTodoList] = useState(initTodoList);
 	const myInput = useRef();
 
 	useEffect(() => {
@@ -29,6 +28,7 @@ const TodoPage = () => {
 			}
 		});
 	});
+	console.log(todoList);
 
 	const toggleInput = () => {
 		myInput.current.className = 'showNewTodo';
@@ -76,9 +76,7 @@ const TodoPage = () => {
 		myInput.current.className = 'notShow';
 	};
 
-	const checked = () => {
-		setFinish(true);
-	};
+
 	// const handleEnterKey = (e) => {
 	// 	if (e.nativeEvent.keyCode === 13) {
 	// 		newTodoItem(e);
@@ -147,46 +145,47 @@ const TodoPage = () => {
 						padding-inline-start: 0;
 						list-style: none;
 						font-size: 1.2rem;
+						.container {
+							display: flex;
+							align-items: center;
+							margin-bottom: 10px;
+						}
 						.item {
 							padding: 3px;
 							display: inline-block;
 						}
-						.custom-checkbox span {
-							background-color: white;
-							border-radius: 5px;
-							border: 1px solid #d3d3d3;
-							width: 20px;
-							height: 20px;
-							display: inline-block;
-							text-align: center;
-							vertical-align: middle;
-							line-height: 20px;
-							position: relative;
+						.item--finished {
+							text-decoration: line-through;
+							color: #ccc;
 						}
-						.custom-checkbox input[type='checkbox'] {
-							display: none;
-						}
-						.custom-checkbox input[type='checkbox']:checked + span {
-							border: none;
-						}
-						.custom-checkbox input[type='checkbox']:checked + span:after {
-							position: absolute;
-							right: -8px;
-							top: -6px;
-							content: url(https://i.loli.net/2020/04/24/J5fFsN8jMh7xSkT.png);
+						.checkme {
+							width: 22px;
+							height: 22px;
+							border: 2px solid #d0d0d0;
+							border-radius: 6px;
+							fill: #2DCA70;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							margin-right: 10px;
 						}
 					`}
 				>
-					{todoList.content &&
-						todoList.content.map((item, i) => (
-							<p key={i}>
-								<label className='custom-checkbox'>
-									<input type='checkbox' onClick={checked} />
-									<span></span>
-									&nbsp;&nbsp;
-									<li className='item'>{item}</li>
-								</label>
-							</p>
+					{todoList.contents &&
+						todoList.contents.map((item, i) => (
+							<div className='container'
+								key={i}
+								onClick={() =>
+									ToggleTodoItemFinished(parseInt(params.contentId), i)
+								}
+							>
+								<div className='checkme'>
+									{item.finished && (<svg t='1587830410954' className='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='1902' width='200' height='200'> <path d='M384.064 640.213333 213.482667 469.568 128.192 554.88 298.773333 725.525333 384.064 810.858667 895.850667 298.922667 810.56 213.589333 384.064 640.213333Z' p-id='1903' ></path> </svg>)}
+								</div>
+								<li className={` item ${item.finished ? 'item--finished' : ''} `} >
+									{item.content}
+								</li>
+							</div>
 						))}
 				</ul>
 			</div>

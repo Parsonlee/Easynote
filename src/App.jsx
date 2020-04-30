@@ -4,10 +4,11 @@ import { jsx, css, Global } from '@emotion/core';
 import { normalize } from 'polished';
 import {
 	useHistory,
-	useLocation,
+	// useLocation,
 	Route,
 	Switch,
 	Redirect,
+	useLocation,
 } from 'react-router-dom';
 
 import Container from './components/Container';
@@ -36,26 +37,26 @@ const App = () => {
 	const { theme } = useThemeModel();
 	const { auth, setAuthStatus } = useAuthModel();
 	const history = useHistory();
-	const location = useLocation();
-
+	const { pathname } = useLocation()
+	const initCategory = pathname.split('/')[1]
+	
+	
 	// 侧栏
 	const [showSidebar, setShowSidebar] = useState(true);
 
 	// app category切换
-	const [category, setCategory] = useState(
-		location.pathname === '/note' ? 0 : 1
-	);
+	const [category, setCategory] = useState(initCategory);
 	const handleCategorySwitch = (index) => {
 		history.push(`/${!index ? 'note' : 'todo'}`);
 		setCategory(index);
 	};
 
 	// 检查是否登录 && 判断当前处于哪个主功能界面
+	// eslint-disable-next-line
 	useEffect(() => {
 		setAuthStatus();
-		category ? setCategory(1) : setCategory(0);
-		// eslint-disable-next-line
-	}, [category]);
+		pathname.split('/')[1] === 'note' ? setCategory(0) : setCategory(1);
+	});
 
 	// 用户视图
 	const handleClickUser = () => {

@@ -6,19 +6,19 @@ import { motion } from 'framer-motion';
 
 import useThemeModel from '../../models/useThemeModel';
 
-const AppSwitch = ({ initial = 0, onSwitch, activeIndex=0, selfBehave=false }) => {
+const AppSwitch = ({ onSwitch, activeIndex, selfBehave = false }) => {
 	const { theme } = useThemeModel();
-	const [active, setActive] = useState(initial);
+	const [active, setActive] = useState(0);
 
 	// 接受activeIndex来改变自身active
 	useEffect(() => {
-		setActive(activeIndex)
+		setActive(activeIndex);
 	}, [activeIndex]);
 
-	const handleClick = index =>{
+	const handleClick = (index) => {
 		onSwitch && onSwitch(index);
 		selfBehave && setActive(index);
-	}
+	};
 
 	return (
 		<StyledAppSwitch theme={theme}>
@@ -27,7 +27,7 @@ const AppSwitch = ({ initial = 0, onSwitch, activeIndex=0, selfBehave=false }) =
 				active={active}
 				animate={{
 					left: active ? '40%' : '0%',
-					transition: { ease: 'easeOut', duration: '0.3' }
+					transition: { ease: 'easeOut', duration: '0.3' },
 				}}
 			/>
 			<div

@@ -58,8 +58,8 @@ const RichTextDemo = () => {
 				editor={editor}
 				value={value}
 				onChange={(value) => {
+					setValue(value);
 					if (auth) {
-						setValue(value);
 						const content = JSON.stringify(value);
 						localStorage.setItem(`${params.contentId}`, content);
 					}
@@ -69,8 +69,8 @@ const RichTextDemo = () => {
 					renderElement={renderElement}
 					renderLeaf={renderLeaf}
 					onBlur={modifyNote}
-					autoFocus
 					spellCheck={false}
+					// autoFocus
 				/>
 				<ToolBar
 					css={css`
@@ -228,14 +228,41 @@ const EditField = styled.div`
 const initialValue = [
 	{
 		type: 'heading-two',
-		children: [{ text: '🌈🌈😁😁😁' }],
+		children: [{ text: '🌈🌈请点这里查看使用教程' }],
 	},
 	{
 		type: 'paragraph',
 		children: [
 			{
 				text:
-					'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam veritatis sapiente',
+					'	🥳初次使用请先点击右上角头像，进入用户注册并登陆。登陆成功后会看到右上角你的头像变为了一只可爱的小鹿。再次点击头像即可查看用户信息，在这里你可以上传自己的头像。',
+			},
+		],
+	},
+	{
+		type: 'paragraph',
+		children: [
+			{
+				text:
+					'	😎接下来你就可以开始你的创作，点击右上角的按钮即可新建一篇笔记或是待办，将鼠标移到右边侧栏的条目上可以看到删除按钮，点击即可删除对应条目。同时你也可以选择打开或隐藏侧栏。',
+			},
+		],
+	},
+	{
+		type: 'paragraph',
+		children: [
+			{
+				text:
+					'	✈️点开每个条目，右边主区域会显示编辑界面，右下角有两个按钮，在笔记中，点击第一个按钮会出现文字样式框，此时点击右上角的小鼠标后可对样式框进行拖拽；在待办中，点击第一个按钮会出现输入框，你可以输入新添加的事项。',
+			},
+		],
+	},
+	{
+		type: 'paragraph',
+		children: [
+			{
+				text:
+					'	🚗感谢使用Easynote，有还需改进的地方请提出您的宝贵意见，谢谢🚢。',
 			},
 		],
 	},

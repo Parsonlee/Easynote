@@ -48,21 +48,19 @@ const UserInfo = () => {
 		setAuthStatus();
 		setData([
 			{
-				contentId: '0',
+				contentId: 0,
 				category: 'note',
-				updateTime: '2020-03-11 00:52',
-				title: '🌈🌈😁😁😁',
-				description:
-					'beatae illum cumque repudiandae corporis iure molestiae tempore.',
-				content:
-					'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam veritatis sapiente',
+				updateTime: '2020-03-11 00:52:37',
+				title: '🌈🌈请点这里查看使用教程',
+				description: '🥳初次使用请先点击右上角头像，进入用户注册并登陆。',
+				content: '',
 			},
 		]);
 		history.push('/');
 	};
 
 	const backToIndex = () => {
-		history.push('/');
+		history.push('/note');
 	};
 
 	const changeAvatar = () => {

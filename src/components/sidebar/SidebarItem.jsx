@@ -94,12 +94,10 @@ const SideListItem = ({
 				.time {
 					display: flex;
 					justify-content: space-between;
-					white-space: nowrap;
 				}
 				.time-date {
 					font-size: 12px;
 					color: ${theme.color.hint};
-					white-space: nowrap;
 				}
 			`}
 		>

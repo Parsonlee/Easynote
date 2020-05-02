@@ -44,6 +44,11 @@ const CreateBtn = ({ children = '+写文章', category }) => {
 				align-items: center;
 				user-select: none;
 				-webkit-app-region: no-drag;
+				white-space: nowrap;
+				padding: 10px;
+				@media only screen and (min-width: 320px) and (max-width: 768px) {
+					padding: 0;
+				}
 			`}
 			whileHover={{ scale: 1.1 }}
 			whileTap={{ scale: 0.9 }}
@@ -52,7 +57,14 @@ const CreateBtn = ({ children = '+写文章', category }) => {
 				whileHover={{ scale: 0.9 }}
 				whileTap={{ scale: 1.1 }}
 				css={css`
-					padding: 10px 10px;
+					@media only screen and (min-width: 320px) and (max-width: 768px) {
+						width: 40px;
+						height: 40px;
+						border-radius: 50%;
+						overflow: hidden;
+						padding: 0 0 0 10px;
+						font-size: 2rem;
+					}
 				`}
 			>
 				{children}

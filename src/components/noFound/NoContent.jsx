@@ -22,6 +22,10 @@ const NoContent = () => {
 					color: ${theme.primary.base};
 					text-decoration: none;
 				}
+				@media only screen and (min-width: 320px) and (max-width: 768px) {
+					padding: 0 15px;
+					font-size: 2.6rem;
+				}
 			`}
 		>
 			请从侧栏选择一个条目或新建

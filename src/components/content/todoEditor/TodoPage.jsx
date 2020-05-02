@@ -119,6 +119,9 @@ const TodoPage = () => {
 				height: 100%;
 				padding: 10px 65px;
 				outline: none;
+				@media only screen and (min-width: 320px) and (max-width: 768px) {
+					padding: 10px 20px;
+				}
 				.title {
 					border: none;
 					border-bottom: 2px solid whitesmoke;

@@ -43,6 +43,13 @@ const User = ({ onClick }) => {
 				img {
 					width: 40px;
 					height: 40px;
+					@media only screen and (min-width: 320px) and (max-width: 768px) {
+						width: 45px;
+						height: 45px;	
+					}
+				}
+				@media only screen and (min-width: 320px) and (max-width: 768px) {
+					margin-left: 16px;
 				}
 			`}
 			whileHover={{ scale: 1.1 }}

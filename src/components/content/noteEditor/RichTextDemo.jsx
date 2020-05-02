@@ -225,6 +225,7 @@ const EditField = styled.div`
 	padding: 0 65px;
 	outline: none;
 	@media only screen and (min-width: 320px) and (max-width: 768px) {
+		width: 70%;
 		padding: 0 35px;
 	}
 `;

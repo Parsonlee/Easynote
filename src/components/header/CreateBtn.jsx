@@ -62,8 +62,8 @@ const CreateBtn = ({ children = '+写文章', category }) => {
 						height: 40px;
 						border-radius: 50%;
 						overflow: hidden;
-						padding: 0 0 0 0.74rem;
-						font-size: 2rem;
+						padding: 0 0 0 10px;
+						font-size: 2.1rem;
 					}
 				`}
 			>

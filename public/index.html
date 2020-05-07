@@ -28,7 +28,7 @@
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
-		<button class="add-button">Add to home screen</button>
+		<button id="btn-install">安装应用</button>
 		<div id="root"></div>
 		<!--
       This HTML file is a template.
@@ -39,31 +39,34 @@
 
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
-		-->
+    -->
 		<script>
-			window.addEventListener('beforeinstallprompt', (e) => {
-				// Prevent Chrome 67 and earlier from automatically showing the prompt
-				e.preventDefault();
-				// Stash the event so it can be triggered later.
-				deferredPrompt = e;
-				// Update UI to notify the user they can add to home screen
-				addBtn.style.display = 'block';
+			let installPromptEvent = null;
+			const addBtn = document.querySelector('#btn-install');
+			addBtn.style.display = 'none';
 
-				addBtn.addEventListener('click', (e) => {
-					// hide our user interface that shows our A2HS button
-					addBtn.style.display = 'none';
-					// Show the prompt
-					deferredPrompt.prompt();
-					// Wait for the user to respond to the prompt
-					deferredPrompt.userChoice.then((choiceResult) => {
-						if (choiceResult.outcome === 'accepted') {
-							console.log('User accepted the A2HS prompt');
-						} else {
-							console.log('User dismissed the A2HS prompt');
-						}
-						deferredPrompt = null;
-					});
+			window.addEventListener('beforeinstallprompt', (event) => {
+				event.preventDefault(); // Chrome <= 67 可以阻止显示
+				installPromptEvent = event; // 拿到事件的引用
+				document.querySelector('#btn-install').disabled = false; // 更新安装 UI，通知用户可以安装
+			});
+
+			document.querySelector('#btn-install').addEventListener('click', () => {
+				if (!installPromptEvent) {
+					return;
+				}
+				installPromptEvent.prompt();
+				installPromptEvent.userChoice.then((choiceResult) => {
+					if (choiceResult.outcome === 'accepted') {
+						console.log('用户已同意添加到桌面');
+					} else {
+						console.log('用户已取消添加到桌面');
+					}
 				});
+			});
+
+			window.addEventListener('appinstalled', (evt) => {
+				console.log('已安装到桌面屏幕');
 			});
 		</script>
 	</body>

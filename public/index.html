@@ -28,7 +28,6 @@
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
-		<button id="btn-install">add to homescreen</button>
 		<div id="root"></div>
 		<!--
       This HTML file is a template.
@@ -40,35 +39,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-		<script>
-			let installPromptEvent = null;
-			const addBtn = document.querySelector('#btn-install');
-			addBtn.style.display = 'none';
-
-			window.addEventListener('beforeinstallprompt', (event) => {
-				event.preventDefault(); // Chrome <= 67 可以阻止显示
-				installPromptEvent = event; // 拿到事件的引用
-				addBtn.style.display = 'block'; // 更新安装 UI，通知用户可以安装
-			});
-
-			addBtn.addEventListener('click', () => {
-				addBtn.style.display = 'none';
-				if (!installPromptEvent) {
-					return;
-				}
-				installPromptEvent.prompt();
-				installPromptEvent.userChoice.then((choiceResult) => {
-					if (choiceResult.outcome === 'accepted') {
-						console.log('用户已同意添加到桌面');
-					} else {
-						console.log('用户已取消添加到桌面');
-					}
-				});
-			});
-
-			window.addEventListener('appinstalled', (evt) => {
-				console.log('已安装到桌面屏幕');
-			});
-		</script>
 	</body>
 </html>

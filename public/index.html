@@ -28,7 +28,7 @@
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
-		<button id="btn-install">安装应用</button>
+		<button id="btn-install">add to homescreen</button>
 		<div id="root"></div>
 		<!--
       This HTML file is a template.
@@ -48,10 +48,11 @@
 			window.addEventListener('beforeinstallprompt', (event) => {
 				event.preventDefault(); // Chrome <= 67 可以阻止显示
 				installPromptEvent = event; // 拿到事件的引用
-				document.querySelector('#btn-install').disabled = false; // 更新安装 UI，通知用户可以安装
+				addBtn.style.display = 'block'; // 更新安装 UI，通知用户可以安装
 			});
 
-			document.querySelector('#btn-install').addEventListener('click', () => {
+			addBtn.addEventListener('click', () => {
+				addBtn.style.display = 'none';
 				if (!installPromptEvent) {
 					return;
 				}

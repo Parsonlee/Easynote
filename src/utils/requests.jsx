@@ -14,17 +14,17 @@ axios.interceptors.request.use(
 
 // 注册
 export const userRegisterRequest = (userData) => {
-	return axios.post('http://localhost:3100/api/users', userData);
+	return axios.post('http://121.36.26.183:3000/api/users', userData);
 };
 
 // 检查用户名是否存在
 export const isUserExist = (username) => {
-	return axios.get(`http://localhost:3100/api/users/${username}`, username);
+	return axios.get(`http://121.36.26.183:3000/api/users/${username}`, username);
 };
 
 // 登录
 export const login = (data) => {
-	return axios.post('http://localhost:3100/api/login', data);
+	return axios.post('http://121.36.26.183:3000/api/login', data);
 };
 
 // 退出登录
@@ -36,54 +36,54 @@ export const logOut = () => {
 
 // 查询用户信息
 export const checkUserInfo = (userId) => {
-	return axios.post('http://localhost:3100/api/userInfo', userId);
+	return axios.post('http://121.36.26.183:3000/api/userInfo', userId);
 };
 
 // 修改用户头像
 export const updateAvatar = (userData) => {
-	return axios.post('http://localhost:3100/api/userAvatar', userData);
+	return axios.post('http://121.36.26.183:3000/api/userAvatar', userData);
 };
 
 // 查询用户笔记
 export const getNote = (userId) => {
-	return axios.post('http://localhost:3100/api/note', userId);
+	return axios.post('http://121.36.26.183:3000/api/note', userId);
 };
 
 // 新增笔记
 export const newNote = (data) => {
-	return axios.post('http://localhost:3100/api/newnote', data);
+	return axios.post('http://121.36.26.183:3000/api/newnote', data);
 };
 
 // 修改笔记
 export const updateNote = (data) => {
-	return axios.post('http://localhost:3100/api/updatenote', data);
+	return axios.post('http://121.36.26.183:3000/api/updatenote', data);
 };
 
 // 删除笔记
 export const deleteNote = (data) => {
-	return axios.post('http://localhost:3100/api/deletenote', data);
+	return axios.post('http://121.36.26.183:3000/api/deletenote', data);
 };
 
 // 查询用户待办
 export const getTodo = (userId) => {
-	return axios.post('http://localhost:3100/api/todo', userId);
+	return axios.post('http://121.36.26.183:3000/api/todo', userId);
 };
 // 新增待办
 export const newTodo = (data) => {
-	return axios.post('http://localhost:3100/api/newtodo', data);
+	return axios.post('http://121.36.26.183:3000/api/newtodo', data);
 };
 
 // 修改待办标题
 export const updateTodoTitle = (data) => {
-	return axios.post('http://localhost:3100/api/updatetodotitle', data);
+	return axios.post('http://121.36.26.183:3000/api/updatetodotitle', data);
 };
 
 // 修改待办内容
 export const updateTodoContent = (data) => {
-	return axios.post('http://localhost:3100/api/updatetodoContent', data);
+	return axios.post('http://121.36.26.183:3000/api/updatetodoContent', data);
 };
 
 // 删除待办
 export const deleteTodo = (data) => {
-	return axios.post('http://localhost:3100/api/deletetodo', data);
+	return axios.post('http://121.36.26.183:3000/api/deletetodo', data);
 };

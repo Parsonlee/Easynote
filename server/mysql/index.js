@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 
 const client = mysql.createConnection({
-	host: 'localhost',
+	host: '121.36.26.183',
 	user: 'root',
-	password: '',
+	password: 'Yzh0096412...',
 	database: 'easynote',
 	timezone: '08:00',	//修改时区
 });
